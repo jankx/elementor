@@ -1,0 +1,19 @@
+{
+  "name": "jankx/elementor",
+  "description": "Elementor Widgets and integration for Jankx framework",
+  "type": "library",
+  "license": "MIT",
+  "minimum-stability": "dev",
+  "authors": [
+    {
+      "name": "Puleeno Nguyen",
+      "email": "puleeno@gmail.com"
+    }
+  ],
+  "require": {},
+  "autoload": {
+    "psr-4": {
+      "Jankx\\Elementor\\": "src/"
+    }
+  }
+}
