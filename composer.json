@@ -10,10 +10,13 @@
       "email": "puleeno@gmail.com"
     }
   ],
-  "require": {},
+  "require": {
+    "jankx\\core": "*"
+  },
   "autoload": {
     "psr-4": {
-      "Jankx\\Elementor\\": "src/"
+      "Jankx\\Elementor\\": "src/",
+      "AdvancedElementor\\Controls": "src/Controls"
     }
   }
 }
