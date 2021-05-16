@@ -17,6 +17,9 @@
     "psr-4": {
       "Jankx\\Elementor\\": "src/",
       "AdvancedElementor\\Controls": "src/Controls"
-    }
+    },
+    "files": [
+      "./bootstrap.php"
+    ]
   }
 }
