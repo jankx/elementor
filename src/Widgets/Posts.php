@@ -18,7 +18,10 @@ class Posts extends BaseWidget
 
     public function get_title()
     {
-        return __('Jankx Posts', 'jankx');
+        return sprintf(
+            __('%s Posts', 'jankx'),
+            Jankx::templateName()
+        );
     }
 
     public function get_icon()
@@ -30,7 +33,7 @@ class Posts extends BaseWidget
     {
         return array(
             'theme-elements',
-            Jankx::$templateStylesheet
+            Jankx::templateStylesheet()
         );
     }
 

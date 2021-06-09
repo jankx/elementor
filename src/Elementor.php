@@ -20,6 +20,7 @@ class Elementor
 
     public function integrate()
     {
+        static::$elementorCategory = Jankx::templateStylesheet();
         Controls_Manager::add_tab(
             'post_meta',
             __('Post Meta', 'jankx')
@@ -44,15 +45,10 @@ class Elementor
 
     public function registerJankxCategory($elementsManager)
     {
-        $theme = Jankx::theme();
-        if ($theme->parent()) {
-            $theme = $theme->parent();
-        }
-        static::$elementorCategory = $theme->stylesheet;
         $elementsManager->add_category(
             static::$elementorCategory,
             array(
-                'title' => $theme->get('Name'),
+                'title' => Jankx::templateName(),
                 'icon' => 'fa fa-feather',
             )
         );
