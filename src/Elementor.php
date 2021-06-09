@@ -6,6 +6,7 @@ use Elementor\Controls_Manager;
 use Elementor\Plugin;
 use Elementor\Preview;
 
+use Jankx;
 use Jankx\Elementor\Widgets\Posts;
 use Jankx\Elementor\Widgets\PostsTabs;
 
@@ -15,6 +16,7 @@ class Elementor
     const VERSION = '1.0.0';
 
     protected static $assetDirUrl;
+    protected static $elementorCategory;
 
     public function integrate()
     {
@@ -42,10 +44,15 @@ class Elementor
 
     public function registerJankxCategory($elementsManager)
     {
+        $theme = Jankx::theme();
+        if ($theme->parent()) {
+            $theme = $theme->parent();
+        }
+        static::$elementorCategory = $theme->stylesheet;
         $elementsManager->add_category(
-            'jankx',
+            static::$elementorCategory,
             array(
-                'title' => __('Jankx Elements', 'jankx'),
+                'title' => $theme->get('Name'),
                 'icon' => 'fa fa-feather',
             )
         );
@@ -80,9 +87,9 @@ class Elementor
         $widgetCategories       = $widgetCategoryRefProp->getValue($elementManager);
         $highPriorityCategories = array_slice($widgetCategories, 0, 1);
 
-        if (isset($widgetCategories['jankx'])) {
-            $highPriorityCategories['jankx'] = $widgetCategories['jankx'];
-            unset($widgetCategories['jankx']);
+        if (isset($widgetCategories[static::$elementorCategory])) {
+            $highPriorityCategories[static::$elementorCategory] = $widgetCategories[static::$elementorCategory];
+            unset($widgetCategories[static::$elementorCategory]);
         }
         if (isset($widgetCategories['woocommerce-elements'])) {
             $highPriorityCategories['woocommerce-elements'] = $widgetCategories['woocommerce-elements'];

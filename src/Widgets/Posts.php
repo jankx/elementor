@@ -1,6 +1,7 @@
 <?php
 namespace Jankx\Elementor\Widgets;
 
+use Jankx;
 use Elementor\Controls_Manager;
 use Jankx\PostLayout\PostLayoutManager;
 use Jankx\Widget\Renderers\PostsRenderer;
@@ -27,7 +28,10 @@ class Posts extends BaseWidget
 
     public function get_categories()
     {
-        return array('theme-elements', 'jankx');
+        return array(
+            'theme-elements',
+            Jankx::$templateStylesheet
+        );
     }
 
     public function getPostCategories()
