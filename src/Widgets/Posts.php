@@ -18,10 +18,7 @@ class Posts extends BaseWidget
 
     public function get_title()
     {
-        return sprintf(
-            __('%s Posts', 'jankx'),
-            Jankx::templateName()
-        );
+        return __( 'Posts' );
     }
 
     public function get_icon()
