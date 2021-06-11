@@ -11,7 +11,8 @@
     }
   ],
   "require": {
-    "jankx/core": "*"
+    "jankx/core": "*",
+    "jankx/widget": "*"
   },
   "autoload": {
     "psr-4": {
