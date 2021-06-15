@@ -10,19 +10,7 @@ class Layout
 {
     public function customTemplates()
     {
-        add_filter('jankx_template_pre_get_current_site_layout', array($this, 'makeFullwidthLayout'));
         add_action('template_redirect', array($this, 'integrateTemplateClasses'), 30);
-    }
-
-    public function makeFullwidthLayout($pre)
-    {
-        $page = Page::getInstance();
-        $templateFile = $page->getTemplateFile();
-
-        if (preg_match('/elementor\/.+\/templates\/header\-footer\.php$/', $templateFile)) {
-            return SiteLayout::LAYOUT_FULL_WIDTH;
-        }
-        return $pre;
     }
 
     public function integrateTemplateClasses()
