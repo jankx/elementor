@@ -1,9 +1,9 @@
 <?php
 namespace Jankx\Elementor\Widgets;
 
-use Jankx\Elementor\BaseWidget;
+use Jankx\Elementor\WidgetBase;
 
-class PostsTabs extends BaseWidget
+class PostsTabs extends WidgetBase
 {
     public function get_name()
     {

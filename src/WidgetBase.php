@@ -5,7 +5,7 @@ use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
 use Jankx\PostLayout\PostLayoutManager;
 
-abstract class BaseWidget extends Widget_Base
+abstract class WidgetBase extends Widget_Base
 {
     protected function getImageSizeName($sizeName)
     {

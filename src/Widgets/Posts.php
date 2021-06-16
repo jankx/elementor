@@ -5,9 +5,9 @@ use Jankx;
 use Elementor\Controls_Manager;
 use Jankx\PostLayout\PostLayoutManager;
 use Jankx\Widget\Renderers\PostsRenderer;
-use Jankx\Elementor\BaseWidget;
+use Jankx\Elementor\WidgetBase;
 
-class Posts extends BaseWidget
+class Posts extends WidgetBase
 {
     protected static $customFields = array();
 
@@ -18,7 +18,10 @@ class Posts extends BaseWidget
 
     public function get_title()
     {
-        return __( 'Posts' );
+        return sprintf(
+            __( '%s Posts', 'jankx' ),
+            Jankx::templateName()
+        );
     }
 
     public function get_icon()

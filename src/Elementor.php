@@ -7,8 +7,10 @@ use Elementor\Plugin;
 use Elementor\Preview;
 
 use Jankx;
+use Jankx\Blocks\PostType as BlockPostType;
 use Jankx\Elementor\Widgets\Posts;
 use Jankx\Elementor\Widgets\PostsTabs;
+use Jankx\Elementor\Widgets\Blocks;
 
 class Elementor
 {
@@ -62,6 +64,9 @@ class Elementor
     {
         $widgetsManager->register_widget_type(new Posts());
         $widgetsManager->register_widget_type(new PostsTabs());
+        if (class_exists(BlockPostType::class)) {
+            $widgetsManager->register_widget_type(new Blocks());
+        }
     }
 
     public function removeElementPromtionWidgets($config)
