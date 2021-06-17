@@ -5,6 +5,8 @@ use Jankx\Template\Page;
 use Jankx\SiteLayout\SiteLayout;
 use Elementor\Core\Settings\Manager;
 use Elementor\Core\Responsive\Responsive;
+use Jankx\Asset\CssItem;
+use Jankx\Asset\Cache;
 
 class Layout
 {
@@ -28,7 +30,7 @@ class Layout
         }
 
         if (apply_filters('jankx_template_use_elementor_container_width', true)) {
-            add_action('wp_head', array($this, 'cloneContainerStylesheets'), 9);
+            add_action('wp_enqueue_scripts', array($this, 'cloneContainerStylesheets'), 9);
         }
     }
 
@@ -57,6 +59,9 @@ class Layout
 
     public function cloneContainerStylesheets()
     {
+        if (Cache::globalCssIsExists()) {
+            return;
+        }
         $elementor_kit = get_option('elementor_active_kit');
         if (!$elementor_kit) {
             return;
@@ -110,11 +115,15 @@ class Layout
             'xxl' => 1600,
         ));
 
-        jankx_template('layout/elementor-wrapper', array(
-            'desktop' => $container_width,
-            'tablet' => $container_width_tablet,
-            'mobile' => $container_width_mobile,
-            'breakpoints' => $break_points,
-        ));
+        $containerCSS = CssItem::loadCustomize(
+            'elementor-wrapper.php',
+            array(
+                'desktop' => $container_width,
+                'tablet' => $container_width_tablet,
+                'mobile' => $container_width_mobile,
+                'breakpoints' => $break_points,
+            )
+        );
+        Cache::addGlobalCss($containerCSS);
     }
 }
