@@ -5,7 +5,7 @@ use Jankx\Template\Page;
 use Jankx\SiteLayout\SiteLayout;
 use Elementor\Core\Settings\Manager;
 use Elementor\Core\Responsive\Responsive;
-use Jankx\Asset\CssItem;
+use Jankx\Asset\CustomizableAsset;
 use Jankx\Asset\Cache;
 
 class Layout
@@ -115,7 +115,7 @@ class Layout
             'xxl' => 1600,
         ));
 
-        $containerCSS = CssItem::loadCustomize(
+        $containerCSS = CustomizableAsset::loadCustomize(
             'elementor-wrapper.php',
             array(
                 'desktop' => $container_width,
