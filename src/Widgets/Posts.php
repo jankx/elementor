@@ -3,9 +3,13 @@ namespace Jankx\Elementor\Widgets;
 
 use Jankx;
 use Elementor\Controls_Manager;
-use Jankx\PostLayout\PostLayoutManager;
 use Jankx\Widget\Renderers\PostsRenderer;
 use Jankx\Elementor\WidgetBase;
+
+use Jankx\PostLayout\PostLayoutManager;
+use Jankx\PostLayout\Layout\ListLayout;
+use Jankx\PostLayout\Layout\Card;
+use Jankx\PostLayout\Layout\Carousel;
 
 class Posts extends WidgetBase
 {
@@ -150,7 +154,7 @@ class Posts extends WidgetBase
             [
                 'label' => __('Layout', 'jankx'),
                 'type' => Controls_Manager::SELECT,
-                'default' => PostLayoutManager::LIST_LAYOUT,
+                'default' => ListLayout::LAYOUT_NAME,
                 'options' => $postLayout->getLayouts(array(
                     'type' => 'names'
                 )),
@@ -235,7 +239,7 @@ class Posts extends WidgetBase
                 'default' => 4,
                 'of_type' => 'post_layout',
                 'condition' => array(
-                    'post_layout' => array(PostLayoutManager::CARD, PostLayoutManager::CAROUSEL)
+                    'post_layout' => array(Card::LAYOUT_NAME, Carousel::LAYOUT_NAME)
                 )
             ]
         );
@@ -251,7 +255,7 @@ class Posts extends WidgetBase
                 'default' => 1,
                 'of_type' => 'post_layout',
                 'condition' => array(
-                    'post_layout' => array(PostLayoutManager::CAROUSEL)
+                    'post_layout' => array(Carousel::LAYOUT_NAME)
                 )
             ]
         );
@@ -396,7 +400,7 @@ class Posts extends WidgetBase
             ),
             'post_layout' => array(
                 'map_to' => 'layout',
-                'default' => PostLayoutManager::LIST_LAYOUT
+                'default' => ListLayout::LAYOUT_NAME
             ),
             'post_type' => array(
                 'map_to' => 'post_type',
