@@ -87,7 +87,6 @@ class Posts extends WidgetBase
 
     protected function _register_controls()
     {
-        $postLayout = PostLayoutManager::getInstance();
         $this->start_controls_section(
             'content_section',
             [
@@ -155,7 +154,7 @@ class Posts extends WidgetBase
                 'label' => __('Layout', 'jankx'),
                 'type' => Controls_Manager::SELECT,
                 'default' => ListLayout::LAYOUT_NAME,
-                'options' => $postLayout->getLayouts(array(
+                'options' => PostLayoutManager::getLayouts(array(
                     'type' => 'names'
                 )),
             ]
