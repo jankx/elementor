@@ -155,7 +155,25 @@ class Posts extends WidgetBase
                 'type' => Controls_Manager::SELECT,
                 'default' => ListLayout::LAYOUT_NAME,
                 'options' => PostLayoutManager::getLayouts(array(
-                    'type' => 'names'
+                    'field' => 'names'
+                )),
+            ]
+        );
+        $this->add_control(
+            'sub_post_layout',
+            [
+                'label' => __('Sub Layout', 'jankx'),
+                'type' => Controls_Manager::SELECT,
+                'default' => ListLayout::LAYOUT_NAME,
+                'condition' => array(
+                    'post_layout' => PostLayoutManager::getLayouts(array(
+                        'type' => 'parent',
+                        'field' => 'keys'
+                    )),
+                ),
+                'options' => PostLayoutManager::getLayouts(array(
+                    'type' => 'children',
+                    'field' => 'names'
                 )),
             ]
         );
