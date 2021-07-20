@@ -23,7 +23,7 @@ class Posts extends WidgetBase
     public function get_title()
     {
         return sprintf(
-            __( '%s Posts', 'jankx' ),
+            __('%s Posts', 'jankx'),
             Jankx::templateName()
         );
     }
@@ -115,6 +115,15 @@ class Posts extends WidgetBase
             ]
         );
 
+        $this->add_control(
+            'post_type',
+            [
+                'label' => __('Post Type', 'jankx'),
+                'type' => Controls_Manager::SELECT,
+                'default' => 'post',
+                'options' => $this->getPostTypes(),
+            ]
+        );
 
         $this->add_control(
             'post_categories',
@@ -124,6 +133,9 @@ class Posts extends WidgetBase
                 'multiple' => true,
                 'options' => $this->getPostCategories(),
                 'default' => '',
+                'condition' => array(
+                    'post_type' => array('post'),
+                )
             ]
         );
 
@@ -135,18 +147,12 @@ class Posts extends WidgetBase
                 'multiple' => true,
                 'options' => $this->getPostTags(),
                 'default' => 'none',
+                'condition' => array(
+                    'post_type' => array('post'),
+                )
             ]
         );
 
-        $this->add_control(
-            'post_type',
-            [
-                'label' => __('Post Type', 'jankx'),
-                'type' => Controls_Manager::SELECT,
-                'default' => 'post',
-                'options' => $this->getPostTypes(),
-            ]
-        );
 
         $this->add_control(
             'post_layout',
