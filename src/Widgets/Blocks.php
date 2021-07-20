@@ -7,7 +7,8 @@ use Elementor\Plugin as Elementor;
 use Jankx\Elementor\WidgetBase;
 use Jankx\Blocks\PostType as BlockPostType;
 
-class Blocks extends WidgetBase {
+class Blocks extends WidgetBase
+{
     const WIDGET_NAME = 'jankx_blocks';
 
     public function get_name()
@@ -23,11 +24,13 @@ class Blocks extends WidgetBase {
         );
     }
 
-    public function get_icon() {
+    public function get_icon()
+    {
         return 'eicon-parallax';
     }
 
-    public function get_categories() {
+    public function get_categories()
+    {
         return array(Jankx::templateStylesheet(), 'site');
     }
 
@@ -39,25 +42,27 @@ class Blocks extends WidgetBase {
         if ($choiced_block) {
             $elementor = Elementor::instance();
 
-            echo $elementor->frontend->get_builder_content_for_display( intval($choiced_block) );
+            echo $elementor->frontend->get_builder_content_for_display(intval($choiced_block));
         }
     }
 
-    protected function getAllBlocks() {
+    protected function getAllBlocks()
+    {
         $blocks = get_posts(array(
             'fields' => 'id=>name',
             'post_type' => BlockPostType::BLOCK_POST_TYPE,
             'posts_per_page' => -1,
         ));
         $ret = array();
-        foreach($blocks as $block) {
+        foreach ($blocks as $block) {
             $ret[$block->ID] = $block->post_title;
         }
 
         return $ret;
     }
 
-    protected function _register_controls() {
+    protected function _register_controls()
+    {
         $this->start_controls_section(
             'content_section',
             [
