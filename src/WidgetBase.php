@@ -111,4 +111,15 @@ abstract class WidgetBase extends Widget_Base
         }
         return $imageSize;
     }
+
+    protected function get_page_options()
+    {
+        $pages = get_pages(array());
+        $options = array();
+
+        foreach ($pages as $page) {
+            $options[$page->ID] = $page->post_title;
+        }
+        return apply_filters('jankx_elementor_get_page_options', $options);
+    }
 }

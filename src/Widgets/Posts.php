@@ -325,30 +325,6 @@ class Posts extends WidgetBase
         $this->end_controls_section();
     }
 
-    protected function render()
-    {
-        $settings = $this->get_settings_for_display();
-        $rendererArgs = array();
-        foreach ($this->mappingRenderFields() as $field => $rules) {
-            if (empty($rules['map_to'])) {
-                continue;
-            }
-
-            if (!isset($settings[$field])) {
-                if (!isset($rules['default'])) {
-                    continue;
-                }
-                $settings[$field] = $rules['default'];
-            }
-            $rendererArgs[$rules['map_to']] = isset($rules['value_type'])
-                ? $this->parseValue($settings[$field], $rules['value_type'])
-                : $settings[$field];
-        }
-        $postsRenderer = PostsRenderer::prepare($rendererArgs);
-
-        echo $postsRenderer->render();
-    }
-
     protected function _content_template()
     {
     }
@@ -450,5 +426,29 @@ class Posts extends WidgetBase
         } else {
             static::$customFields[$fieldName] = $args;
         }
+    }
+
+    protected function render()
+    {
+        $settings = $this->get_settings_for_display();
+        $rendererArgs = array();
+        foreach ($this->mappingRenderFields() as $field => $rules) {
+            if (empty($rules['map_to'])) {
+                continue;
+            }
+
+            if (!isset($settings[$field])) {
+                if (!isset($rules['default'])) {
+                    continue;
+                }
+                $settings[$field] = $rules['default'];
+            }
+            $rendererArgs[$rules['map_to']] = isset($rules['value_type'])
+                ? $this->parseValue($settings[$field], $rules['value_type'])
+                : $settings[$field];
+        }
+        $postsRenderer = PostsRenderer::prepare($rendererArgs);
+
+        echo $postsRenderer->render();
     }
 }

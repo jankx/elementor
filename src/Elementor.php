@@ -5,6 +5,7 @@ use ReflectionClass;
 use Elementor\Controls_Manager;
 use Elementor\Plugin;
 use Elementor\Preview;
+use AdvancedElementor\Controls\Choices;
 
 use Jankx;
 use Jankx\Blocks\PostType as BlockPostType;
@@ -57,8 +58,9 @@ class Elementor
         );
     }
 
-    public function registerJankxControls($controlsManager)
+    public function registerJankxControls($controls_manager)
     {
+        $controls_manager->register_control(Choices::CONTROL_NAME, new Choices());
     }
 
     public function registerJankxWidgets($widgetsManager)
