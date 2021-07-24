@@ -10,9 +10,10 @@ class Choices extends BaseControl
         return static::CONTROL_NAME;
     }
 
-    protected function get_control_uid( $input_type = 'default' ) {
-		return 'elementor-control-' . $input_type . '-{{{ data._cid }}}';
-	}
+    protected function get_control_uid($input_type = 'default')
+    {
+        return 'elementor-control-' . $input_type . '-{{{ data._cid }}}';
+    }
 
     protected function get_default_settings()
     {
@@ -28,11 +29,28 @@ class Choices extends BaseControl
 
     public function enqueue()
     {
-        wp_register_style('choices', $this->get_asset_url('libs/Choices/styles/choices.min.css'), [], '9.0.1');
+        wp_register_style(
+            'choices',
+            $this->get_asset_url('libs/Choices/styles/choices.min.css'),
+            [],
+            '9.0.1'
+        );
         wp_enqueue_style('choices');
 
-        wp_register_script('choices', $this->get_asset_url('libs/Choices/scripts/choices.min.js'), [], '9.0.1', true);
-        wp_register_script('choices-control', $this->get_asset_url('controls/choices-control.js'), ['choices', 'elementor-editor'], '1.0.0.4', true);
+        wp_register_script(
+            'choices',
+            $this->get_asset_url('libs/Choices/scripts/choices.min.js'),
+            [],
+            '9.0.1',
+            true
+        );
+        wp_register_script(
+            'choices-control',
+            $this->get_asset_url('controls/choices-control.js'),
+            ['choices', 'elementor-editor'],
+            '1.0.0.15',
+            true
+        );
 
         wp_enqueue_script('choices-control');
     }
@@ -47,7 +65,7 @@ class Choices extends BaseControl
             <# } #>
             <div class="elementor-control-input-wrapper elementor-control-unit-5">
                 <# var multiple = ( data.multiple ) ? 'multiple' : ''; #>
-                <select id="<?php echo $control_uid; ?>" class="elementor-select2" type="select2" {{ multiple }} data-setting="{{ data.name }}">
+                <select id="<?php echo $control_uid; ?>" class="advanced-elementor-choices" type="choices" {{ multiple }} data-setting="{{ data.name }}">
                     <# _.each( data.options, function( option_title, option_value ) {
                         var value = data.controlValue;
                         if ( typeof value == 'string' ) {

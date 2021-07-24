@@ -101,6 +101,7 @@ class PageSelector extends WidgetBase
     public function render()
     {
         $settings      = $this->get_settings_for_display();
+
         $postsRenderer = PageSelectorRenderer::prepare(array(
             'pages' => array_get($settings, 'selected_pages', []),
             'layout' => array_get($settings, 'post_layout', ListLayout::LAYOUT_NAME),
