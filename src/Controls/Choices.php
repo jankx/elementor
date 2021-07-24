@@ -21,7 +21,10 @@ class Choices extends BaseControl
             'options' => [],
             'multiple' => false,
             // Select2 library options
-            'choosed_options' => [],
+            'choosed_options' => [
+                'shouldSort'=> false,
+                'shouldSortItems'=> false,
+            ],
             // the lockedOptions array can be passed option keys. The passed option keys will be non-deletable.
             'locked_options' => [],
         ];
@@ -48,7 +51,7 @@ class Choices extends BaseControl
             'choices-control',
             $this->get_asset_url('controls/choices-control.js'),
             ['choices', 'elementor-editor'],
-            '1.0.0.50',
+            '1.0.1.1',
             true
         );
 
@@ -64,10 +67,21 @@ class Choices extends BaseControl
                 <label for="<?php echo $control_uid; ?>" class="elementor-control-title">{{{ data.label }}}</label>
             <# } #>
             <div class="elementor-control-input-wrapper elementor-control-unit-5">
+                <#
+                    var current_value = data.controlValue;
+                    var sorted_options = {};
+                    var options = data.options;
+
+                    for (i =0; i < current_value.length; i++) {
+                        sorted_options[current_value[i]] = options[current_value[i]];
+                        delete options[current_value[i]];
+                    }
+                    Object.assign(sorted_options, options);
+                #>
                 <# var multiple = ( data.multiple ) ? 'multiple' : ''; #>
                 <select id="<?php echo $control_uid; ?>" class="advanced-elementor-choices" type="choices" {{ multiple }} data-setting="{{ data.name }}">
-                    <# _.each( data.options, function( option_title, option_value ) {
-                        var value = data.controlValue;
+                    <# _.each( sorted_options, function( option_title, option_value ) {
+                            var value = data.controlValue;
                         if ( typeof value == 'string' ) {
                             var selected = ( option_value === value ) ? 'selected' : '';
                         } else if ( null !== value ) {

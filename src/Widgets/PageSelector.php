@@ -46,7 +46,7 @@ class PageSelector extends WidgetBase
             'label' => __('Pages', 'jankx'),
             'description' => __('Choose your page want to show', 'jankx'),
             'type' => Choices::CONTROL_NAME,
-            'options' => $this->get_page_options(),
+            'options' => $this->get_page_options('item'),
             'multiple' => true,
         ]);
 
