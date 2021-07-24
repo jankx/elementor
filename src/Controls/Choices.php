@@ -1,9 +1,7 @@
 <?php
 namespace AdvancedElementor\Controls;
 
-use Elementor\Base_Data_Control;
-
-class Choices extends Base_Data_Control
+class Choices extends BaseControl
 {
     const CONTROL_NAME = 'choices';
 
@@ -11,6 +9,10 @@ class Choices extends Base_Data_Control
     {
         return static::CONTROL_NAME;
     }
+
+    protected function get_control_uid( $input_type = 'default' ) {
+		return 'elementor-control-' . $input_type . '-{{{ data._cid }}}';
+	}
 
     protected function get_default_settings()
     {
@@ -26,19 +28,12 @@ class Choices extends Base_Data_Control
 
     public function enqueue()
     {
-        $assetDir = dirname(dirname(__DIR__)) . '/assets';
-        $abspath = constant('ABSPATH');
-        if (PHP_OS === 'WINNT') {
-            $abspath = str_replace('\\', '/', $abspath);
-            $assetDir = str_replace('\\', '/', $assetDir);
-        }
-        $assetDirUrl = str_replace($abspath, site_url('/'), $assetDir);
-
-        wp_register_style('choices', sprintf('%s/libs/Choices/styles/choices.min.js', $assetDirUrl), [], '9.0.1');
+        wp_register_style('choices', $this->get_asset_url('libs/Choices/styles/choices.min.css'), [], '9.0.1');
         wp_enqueue_style('choices');
 
-        wp_register_script('choices', sprintf('%s/libs/Choices/scripts/choices.min.js', $assetDirUrl), [], '9.0.1');
-        wp_register_script('choices-control', sprintf('%s/controls/choices-control.js', $assetDirUrl), ['choices'], '1.0.0');
+        wp_register_script('choices', $this->get_asset_url('libs/Choices/scripts/choices.min.js'), [], '9.0.1', true);
+        wp_register_script('choices-control', $this->get_asset_url('controls/choices-control.js'), ['choices', 'elementor-editor'], '1.0.0.4', true);
+
         wp_enqueue_script('choices-control');
     }
 
