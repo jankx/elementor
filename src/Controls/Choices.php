@@ -21,9 +21,9 @@ class Choices extends BaseControl
             'options' => [],
             'multiple' => false,
             // Select2 library options
-            'select2options' => [],
+            'choosed_options' => [],
             // the lockedOptions array can be passed option keys. The passed option keys will be non-deletable.
-            'lockedOptions' => [],
+            'locked_options' => [],
         ];
     }
 
@@ -48,7 +48,7 @@ class Choices extends BaseControl
             'choices-control',
             $this->get_asset_url('controls/choices-control.js'),
             ['choices', 'elementor-editor'],
-            '1.0.0.15',
+            '1.0.0.50',
             true
         );
 

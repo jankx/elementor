@@ -2,11 +2,11 @@ choicesItemView = elementor.modules.controls.BaseData.extend({
     choices: null,
     onReady: function() {
         var options = _.extend({
+            removeItemButton: true,
         }, this.model.get('choices_options'));
 
-        console.log(this);
+        var choices = new Choices(this.ui.select[0], options);
 
-        choices = new Choices(this.ui.select[0]);
         this.ui.select[0].choices = choices;
     },
 });
