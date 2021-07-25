@@ -64,6 +64,16 @@ class PageSelector extends WidgetBase
         );
 
         $this->add_control(
+            'item_style',
+            [
+                'label' => __('Style', 'jankx'),
+                'type' => Controls_Manager::SELECT,
+                'default' => 'simple',
+                'options' => PageSelectorRenderer::getStyleSupports(),
+            ]
+        );
+
+        $this->add_control(
             'columns',
             [
                 'label' => __('Columns', 'jankx'),
@@ -105,6 +115,7 @@ class PageSelector extends WidgetBase
         $postsRenderer = PageSelectorRenderer::prepare(array(
             'pages' => array_get($settings, 'selected_pages', []),
             'layout' => array_get($settings, 'post_layout', ListLayout::LAYOUT_NAME),
+            'style' => array_get($settings, 'item_style', 'simple'),
             'columns' => 4,
         ));
 
