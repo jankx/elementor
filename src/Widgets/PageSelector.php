@@ -5,9 +5,9 @@ use Jankx;
 use Elementor\Controls_Manager;
 use Jankx\Elementor\WidgetBase;
 use Jankx\PostLayout\PostLayoutManager;
-use Jankx\PostLayout\Layout\ListLayout;
 use Jankx\PostLayout\Layout\Card;
 use Jankx\PostLayout\Layout\Carousel;
+use Jankx\PostLayout\Layout\Grid;
 use Jankx\Widget\Renderers\PageSelectorRenderer;
 use AdvancedElementor\Controls\Choices;
 
@@ -55,10 +55,11 @@ class PageSelector extends WidgetBase
             [
                 'label' => __('Layout', 'jankx'),
                 'type' => Controls_Manager::SELECT,
-                'default' => ListLayout::LAYOUT_NAME,
+                'default' => Card::LAYOUT_NAME,
 
                 'options' => PostLayoutManager::getLayouts(array(
-                    'field' => 'names'
+                    'field' => 'names',
+                    'exclude' => 'parent'
                 )),
             ]
         );
@@ -73,6 +74,8 @@ class PageSelector extends WidgetBase
             ]
         );
 
+        $this->addThumbnailControls();
+
         $this->add_control(
             'columns',
             [
@@ -84,7 +87,7 @@ class PageSelector extends WidgetBase
                 'default' => 4,
                 'of_type' => 'post_layout',
                 'condition' => array(
-                    'post_layout' => array(Card::LAYOUT_NAME, Carousel::LAYOUT_NAME)
+                    'post_layout' => array(Card::LAYOUT_NAME, Carousel::LAYOUT_NAME, Grid::LAYOUT_NAME)
                 )
             ]
         );
@@ -114,9 +117,10 @@ class PageSelector extends WidgetBase
 
         $postsRenderer = PageSelectorRenderer::prepare(array(
             'pages' => array_get($settings, 'selected_pages', []),
-            'layout' => array_get($settings, 'post_layout', ListLayout::LAYOUT_NAME),
+            'layout' => array_get($settings, 'post_layout', Card::LAYOUT_NAME),
             'style' => array_get($settings, 'item_style', 'simple'),
-            'columns' => 4,
+            'columns' => array_get($settings, 'columns', 4),
+            'rows' => array_get($settings, 'rows', 1),
         ));
 
         echo $postsRenderer->render();
