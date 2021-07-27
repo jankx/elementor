@@ -386,10 +386,6 @@ class Posts extends WidgetBase
                 'map_to' => 'show_title',
                 'value_type' => 'boolean'
             ),
-            'show_post_thumbnail' => array(
-                'map_to' => 'show_thumbnail',
-                'value_type' => 'boolean'
-            ),
             'show_pagination' => array(
                 'map_to' => 'show_pagination',
                 'value_type' => 'boolean'
@@ -404,6 +400,10 @@ class Posts extends WidgetBase
             'post_type' => array(
                 'map_to' => 'post_type',
                 'default' => 'post',
+            ),
+            'show_post_thumbnail' => array(
+                'map_to' => 'show_thumbnail',
+                'value_type' => 'boolean'
             ),
             'thumbnail_size' => array(
                 'map_to' => 'thumbnail_size',
