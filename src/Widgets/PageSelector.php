@@ -34,6 +34,8 @@ class PageSelector extends WidgetBase
 
     protected function _register_controls()
     {
+        $page_options = $this->get_page_options('item');
+
         $this->start_controls_section(
             'content_section',
             array(
@@ -46,8 +48,9 @@ class PageSelector extends WidgetBase
             'label' => __('Pages', 'jankx'),
             'description' => __('Choose your page want to show', 'jankx'),
             'type' => Choices::CONTROL_NAME,
-            'options' => $this->get_page_options('item'),
+            'options' => $page_options,
             'multiple' => true,
+            'default' => array(),
         ]);
 
         $this->add_control(
@@ -124,7 +127,7 @@ class PageSelector extends WidgetBase
             'show_post_thumbnail' => array($settings, 'show_thumbnail'),
             'thumbnail_size' => array($settings, 'thumbnail_size', 'medium'),
         ));
-
+        
         echo $postsRenderer->render();
     }
 }
