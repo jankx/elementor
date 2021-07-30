@@ -1,6 +1,7 @@
 <?php
 namespace Jankx\Elementor\Widgets;
 
+use Jankx;
 use Jankx\Elementor\WidgetBase;
 
 class PostsTabs extends WidgetBase
@@ -13,6 +14,14 @@ class PostsTabs extends WidgetBase
     public function get_title()
     {
         return __('Jankx Posts Tabs', 'jankx');
+    }
+
+    public function get_categories()
+    {
+        return array(
+            'theme-elements',
+            Jankx::templateStylesheet()
+        );
     }
 
     protected function render()

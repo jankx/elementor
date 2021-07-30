@@ -33,6 +33,9 @@ class Elementor
         $layout = new Layout();
         add_action('template_redirect', array($layout, 'customTemplates'));
 
+        $icons = new Icons();
+        $icons->loadIcons();
+
         add_action('elementor/elements/categories_registered', array($this, 'registerJankxCategory'));
         add_action('elementor/controls/controls_registered', array($this, 'registerJankxControls'));
         add_action('elementor/widgets/widgets_registered', array($this, 'registerJankxWidgets'));
@@ -68,6 +71,7 @@ class Elementor
         $widgetsManager->register_widget_type(new Posts());
         $widgetsManager->register_widget_type(new PostsTabs());
         $widgetsManager->register_widget_type(new PageSelector());
+
         if (class_exists(BlockPostType::class)) {
             $widgetsManager->register_widget_type(new Blocks());
         }

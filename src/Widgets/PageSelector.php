@@ -32,6 +32,14 @@ class PageSelector extends WidgetBase
         return 'eicon-checkbox';
     }
 
+    public function get_categories()
+    {
+        return array(
+            'theme-elements',
+            Jankx::templateStylesheet()
+        );
+    }
+
     protected function _register_controls()
     {
         $page_options = $this->get_page_options('item');
@@ -127,7 +135,7 @@ class PageSelector extends WidgetBase
             'show_post_thumbnail' => array($settings, 'show_thumbnail'),
             'thumbnail_size' => array($settings, 'thumbnail_size', 'medium'),
         ));
-        
+
         echo $postsRenderer->render();
     }
 }
