@@ -10,4 +10,9 @@ if (class_exists(Elementor::class))
         'after_setup_theme',
         array($elementor, 'integrate')
     );
+
+    add_filter(
+    	'jankx/template/loader/load',
+    	array($elementor, 'loadTemplateInEditingMode')
+    );
 }

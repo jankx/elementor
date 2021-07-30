@@ -13,6 +13,7 @@ use Jankx\Elementor\Widgets\Posts;
 use Jankx\Elementor\Widgets\PostsTabs;
 use Jankx\Elementor\Widgets\Blocks;
 use Jankx\Elementor\Widgets\PageSelector;
+use Jankx\TemplateLoader;
 
 class Elementor
 {
@@ -141,5 +142,13 @@ class Elementor
 
             wp_enqueue_style('elementor-edit-mode');
         }
+    }
+
+    public function loadTemplateInEditingMode($load)
+    {
+        if (isset($_GET['action']) && $_GET['action']=== 'elementor') {
+            return true;
+        }
+        return $load;
     }
 }
