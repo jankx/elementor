@@ -6,6 +6,8 @@ use Jankx\Elementor\WidgetBase;
 
 class PostsTabs extends WidgetBase
 {
+    protected $postType = 'post';
+
     public function get_name()
     {
         return 'jankx_posts_tabs';
