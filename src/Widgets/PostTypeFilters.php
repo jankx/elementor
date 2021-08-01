@@ -3,6 +3,7 @@ namespace Jankx\Elementor\Widgets;
 
 use Elementor\Controls_Manager;
 use Jankx\Elementor\WidgetBase;
+use Jankx\Widget\Renderers\PostTypeFiltersRenderer;
 
 class PostTypeFilters extends WidgetBase
 {
@@ -36,5 +37,16 @@ class PostTypeFilters extends WidgetBase
 
     protected function render()
     {
+        $settings = $this->get_settings_for_display();
+        $filters = new PostTypeFiltersRenderer();
+        $filters->setOptions(array(
+            'layout' => array_get($settings, 'layout', 'card'),
+            'posts_per_page' => array_get($settings, 'limit', 10),
+        ));
+        $filters->setLayoutOptions(array(
+            'columns' => array_get($settings, 'columns', 4),
+        ));
+
+        echo $filters->render();
     }
 }
