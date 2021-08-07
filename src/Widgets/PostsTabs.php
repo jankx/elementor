@@ -60,6 +60,11 @@ class PostsTabs extends WidgetBase
                 'taxonomy' => 'category',
                 'label' => __('Category'),
             ),
+            'post_tag' => array(
+                'type' => 'taxonomy',
+                'taxonomy' => 'post_tag',
+                'label' => __('Post Tags', 'jankx'),
+            ),
         );
     }
 
