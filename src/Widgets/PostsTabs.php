@@ -47,6 +47,11 @@ class PostsTabs extends WidgetBase
         return 'eicon-tabs';
     }
 
+    public function get_post_types()
+    {
+        return 'post';
+    }
+
     protected function createFilters()
     {
         $this->filters = array(
@@ -128,6 +133,8 @@ class PostsTabs extends WidgetBase
                 ]
             );
         }
+
+        $this->registerExtraControls();
 
         do_action("jankx/elementor/widget/{$this->get_name()}/filters/after", $this);
 
@@ -244,9 +251,11 @@ class PostsTabs extends WidgetBase
         $renderer = PostsTabsRenderer::prepare(array(
             'layout' => array_get($settings, 'post_layout', Card::LAYOUT_NAME),
             'tabs' => $this->transformElementorSettingsToTabs(),
+            'post_type' => $this->get_post_types(),
         ));
         $renderer->setLayoutOptions(array(
             'columns' => array_get($settings, 'columns', 4),
+            'item_style' => array_get($settings, 'item_style', 'default'),
         ));
 
         echo $renderer->render();
