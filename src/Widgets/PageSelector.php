@@ -70,7 +70,6 @@ class PageSelector extends WidgetBase
 
                 'options' => PostLayoutManager::getLayouts(array(
                     'field' => 'names',
-                    'exclude' => 'parent'
                 )),
             ]
         );
