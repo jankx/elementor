@@ -1,11 +1,12 @@
 <?php
 namespace Jankx\Elementor\Widgets;
 
+use Jankx;
 use Elementor\Controls_Manager;
 use Jankx\Elementor\WidgetBase;
 use Jankx\Widget\Renderers\PostTypeFiltersRenderer;
 
-class PostTypeFilters extends WidgetBase
+abstract class PostTypeFilters extends WidgetBase
 {
     const WIDGET_NAME  = 'post_type_filter';
 
@@ -23,6 +24,14 @@ class PostTypeFilters extends WidgetBase
         return 'atz-user';
     }
 
+    public function get_categories()
+    {
+        return array(
+            'theme-elements',
+            Jankx::templateStylesheet()
+        );
+    }
+
     protected function register_controls()
     {
         $this->start_controls_section(
@@ -34,6 +43,10 @@ class PostTypeFilters extends WidgetBase
         );
         $this->end_controls_section();
     }
+
+    abstract protected function filters();
+
+    abstract protected function createFilters();
 
     protected function render()
     {

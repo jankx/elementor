@@ -2,6 +2,7 @@
 namespace Jankx\Elementor\Widgets;
 
 use Elementor\Controls_Manager;
+use Jankx;
 use Jankx\Elementor\WidgetBase;
 use Jankx\Widget\Renderers\PostTypePostsRenderer;
 use Jankx\PostLayout\PostLayoutManager;
@@ -24,6 +25,14 @@ abstract class PostTypePosts extends WidgetBase
         $data_types['specifics'] = __('Specifics', 'jankx');
 
         return $data_types;
+    }
+
+    public function get_categories()
+    {
+        return array(
+            'theme-elements',
+            Jankx::templateStylesheet()
+        );
     }
 
     protected function register_controls()

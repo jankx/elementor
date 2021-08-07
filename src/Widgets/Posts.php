@@ -10,6 +10,7 @@ use Jankx\PostLayout\PostLayoutManager;
 use Jankx\PostLayout\Layout\ListLayout;
 use Jankx\PostLayout\Layout\Card;
 use Jankx\PostLayout\Layout\Carousel;
+use Jankx\PostLayout\Layout\Preset3;
 
 class Posts extends WidgetBase
 {
@@ -96,32 +97,25 @@ class Posts extends WidgetBase
         );
 
         $this->add_control(
-            'widget_title',
-            [
-                'label' => __('Title', 'jankx'),
-                'type' => Controls_Manager::TEXTAREA,
-                'default' => __('Recent Posts', 'jankx'),
-                'placeholder' => __('Input widget title', 'jankx'),
-            ]
-        );
-
-
-        $this->add_control(
-            'show_view_all_link',
-            [
-                'label' => __('View All URL', 'jankx'),
-                'type' => Controls_Manager::URL,
-                'default' => array(),
-            ]
-        );
-
-        $this->add_control(
             'post_type',
             [
                 'label' => __('Post Type', 'jankx'),
                 'type' => Controls_Manager::SELECT,
                 'default' => 'post',
                 'options' => $this->getPostTypes(),
+            ]
+        );
+
+        $this->add_control(
+            'post_format',
+            [
+                'label' => __('Post Format', 'jankx'),
+                'type' => Controls_Manager::SELECT,
+                'options' => $this->get_human_readable_post_formats(),
+                'default' => 'standard',
+                'condition' => array(
+                    'post_type' => $this->get_post_types_support_post_formats(),
+                )
             ]
         );
 
@@ -152,7 +146,6 @@ class Posts extends WidgetBase
                 )
             ]
         );
-
 
         $this->add_control(
             'post_layout',
@@ -189,7 +182,6 @@ class Posts extends WidgetBase
                 'default' => 'no',
             ]
         );
-
 
         $this->addThumbnailControls();
 
@@ -244,7 +236,7 @@ class Posts extends WidgetBase
                 'default' => 4,
                 'of_type' => 'post_layout',
                 'condition' => array(
-                    'post_layout' => array(Card::LAYOUT_NAME, Carousel::LAYOUT_NAME)
+                    'post_layout' => array(Card::LAYOUT_NAME, Carousel::LAYOUT_NAME, Preset3::LAYOUT_NAME)
                 )
             ]
         );
@@ -281,7 +273,7 @@ class Posts extends WidgetBase
         $this->end_controls_section();
 
 
-    // Post metas section
+        // Post metas section
         $this->start_controls_section(
             'post_meta_section',
             [
@@ -329,76 +321,6 @@ class Posts extends WidgetBase
         return $value;
     }
 
-    protected function mappingRenderFields()
-    {
-        $default = array(
-            'show_post_excerpt' => array(
-                'map_to' => 'show_excerpt',
-                'value_type' => 'boolean'
-            ),
-            'show_postdate' => array(
-                'map_to' => 'show_postdate',
-                'value_type' => 'boolean'
-            ),
-            'excerpt_length' => array(
-                'map_to' => 'excerpt_length',
-            ),
-            'post_categories' => array(
-                'map_to' => 'categories',
-            ),
-            'post_tags' => array(
-                'map_to' => 'tags',
-            ),
-            'widget_title' => array(
-                'map_to' => 'header_text',
-            ),
-            'show_view_all_link' => array(
-                'map_to' => 'view_all_url',
-            ),
-            'posts_per_page' => array(
-                'map_to' => 'posts_per_page',
-            ),
-            'columns' => array(
-                'map_to' => 'columns',
-            ),
-            'rows' => array(
-                'map_to' => 'rows',
-            ),
-            'show_post_title' => array(
-                'map_to' => 'show_title',
-                'value_type' => 'boolean'
-            ),
-            'show_pagination' => array(
-                'map_to' => 'show_pagination',
-                'value_type' => 'boolean'
-            ),
-            'thumbnail_position' => array(
-                'map_to' => 'thumbnail_position',
-            ),
-            'post_layout' => array(
-                'map_to' => 'layout',
-                'default' => ListLayout::LAYOUT_NAME
-            ),
-            'post_type' => array(
-                'map_to' => 'post_type',
-                'default' => 'post',
-            ),
-            'show_post_thumbnail' => array(
-                'map_to' => 'show_thumbnail',
-                'value_type' => 'boolean'
-            ),
-            'thumbnail_size' => array(
-                'map_to' => 'thumbnail_size',
-                'default' => 'thumbnail'
-            )
-        );
-
-        return array_merge(
-            $default,
-            static::$customFields
-        );
-    }
-
     public static function addCustomField($fieldName, $args = null)
     {
         if (empty($args)) {
@@ -413,23 +335,24 @@ class Posts extends WidgetBase
     protected function render()
     {
         $settings = $this->get_settings_for_display();
-        $rendererArgs = array();
-        foreach ($this->mappingRenderFields() as $field => $rules) {
-            if (empty($rules['map_to'])) {
-                continue;
-            }
-
-            if (!isset($settings[$field])) {
-                if (!isset($rules['default'])) {
-                    continue;
-                }
-                $settings[$field] = $rules['default'];
-            }
-            $rendererArgs[$rules['map_to']] = isset($rules['value_type'])
-                ? $this->parseValue($settings[$field], $rules['value_type'])
-                : $settings[$field];
-        }
-        $postsRenderer = PostsRenderer::prepare($rendererArgs);
+        $postsRenderer = PostsRenderer::prepare(array(
+            'post_type' => array_get($settings, 'post_type', 'post'),
+            'post_format'  => array_get($settings, 'post_format', 'standard'),
+            'show_excerpt'  => array_get($settings, 'show_post_excerpt', false),
+            'show_postdate'  => array_get($settings, 'show_postdate', true),
+            'excerpt_length'  => array_get($settings, 'excerpt_length', 15),
+            'categories'  => array_get($settings, 'post_categories', []),
+            'tags'  => array_get($settings, 'post_tags', []),
+            'posts_per_page'  => array_get($settings, 'posts_per_page', 10),
+            'columns'  => array_get($settings, 'columns', 4),
+            'rows'  => array_get($settings, 'rows', 1),
+            'show_title'  => array_get($settings, 'show_post_title', true),
+            'show_pagination'  => array_get($settings, 'show_pagination', false),
+            'thumbnail_position'  => array_get($settings, 'thumbnail_position', 'top'),
+            'layout'  => array_get($settings, 'post_layout', Card::LAYOUT_NAME),
+            'show_thumbnail'  => array_get($settings, 'show_post_thumbnail', true),
+            'thumbnail_size'  => array_get($settings, 'thumbnail_size', 'thumbnail'),
+        ));
 
         echo $postsRenderer->render();
     }

@@ -122,4 +122,42 @@ abstract class WidgetBase extends Widget_Base
 
         return apply_filters('jankx_elementor_get_page_options', $options);
     }
+
+    protected function get_post_types_support_post_formats()
+    {
+        $post_types = get_post_types(array(
+            'public' => true,
+        ));
+
+        return array_filter(array_values($post_types), function ($post_type) {
+            return !empty(post_type_supports($post_type, 'post-formats'));
+        });
+    }
+
+    protected function make_human_readable_post_format($post_format)
+    {
+        return preg_replace_callback('/(^\w|\_(\w))/', function ($matches) {
+            if (isset($matches[2])) {
+                return ' ' . strtoupper($matches[2]);
+            }
+            return strtoupper($matches[1]);
+        }, $post_format);
+    }
+
+    public function get_human_readable_post_formats()
+    {
+        $post_formats = get_theme_support('post-formats');
+        if (empty($post_formats)) {
+            return array();
+        }
+        $post_formats = array_get($post_formats, 0);
+        $ret = array(
+            'standard' => __('Standard'),
+        );
+        foreach ($post_formats as $post_format) {
+            $ret[$post_format] = $this->make_human_readable_post_format($post_format);
+        }
+
+        return $ret;
+    }
 }
