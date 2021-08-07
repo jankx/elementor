@@ -129,7 +129,7 @@ abstract class WidgetBase extends Widget_Base
             'public' => true,
         ));
 
-        return array_filter(array_values($post_types), function ($post_type) {
+        return array_filter($post_types, function ($post_type) {
             return !empty(post_type_supports($post_type, 'post-formats'));
         });
     }

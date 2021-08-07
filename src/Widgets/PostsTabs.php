@@ -245,6 +245,15 @@ class PostsTabs extends WidgetBase
         return $tabs;
     }
 
+    protected function preparingRenderLayout($layoutOptions)
+    {
+        do_action_ref_array("jankx/elementor/widget/{$this->get_name()}/layout/options/prepare", [
+            &$layoutOptions
+        ]);
+
+        return $layoutOptions;
+    }
+
     protected function render()
     {
         $settings = $this->get_settings_for_display();
@@ -253,10 +262,9 @@ class PostsTabs extends WidgetBase
             'tabs' => $this->transformElementorSettingsToTabs(),
             'post_type' => $this->get_post_types(),
         ));
-        $renderer->setLayoutOptions(array(
-            'columns' => array_get($settings, 'columns', 4),
-            'item_style' => array_get($settings, 'item_style', 'default'),
-        ));
+        $renderer->setLayoutOptions(
+            $this->preparingRenderLayout(['columns' => array_get($settings, 'columns', 4)])
+        );
 
         echo $renderer->render();
     }

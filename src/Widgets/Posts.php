@@ -114,7 +114,7 @@ class Posts extends WidgetBase
                 'options' => $this->get_human_readable_post_formats(),
                 'default' => 'standard',
                 'condition' => array(
-                    'post_type' => $this->get_post_types_support_post_formats(),
+                    'post_type' => array_values($this->get_post_types_support_post_formats()),
                 )
             ]
         );
