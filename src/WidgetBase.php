@@ -160,4 +160,8 @@ abstract class WidgetBase extends Widget_Base
 
         return $ret;
     }
+
+    protected function registerExtraControls()
+    {
+    }
 }

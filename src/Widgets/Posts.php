@@ -225,6 +225,9 @@ class Posts extends WidgetBase
             ]
         );
 
+        // Define extra controls
+        $this->registerExtraControls();
+
         $this->add_control(
             'columns',
             [
