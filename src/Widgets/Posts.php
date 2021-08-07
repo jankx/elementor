@@ -191,7 +191,7 @@ class Posts extends WidgetBase
                 'label' => __('Thumbnail position', 'jankx'),
                 'type' => Controls_Manager::SELECT,
                 'options' => $this->getImagePositions(),
-                'default' => 'left',
+                'default' => 'top',
                 'condition' => array(
                     'show_post_thumbnail' => 'yes'
                 )
