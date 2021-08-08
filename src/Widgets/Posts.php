@@ -275,7 +275,6 @@ class Posts extends WidgetBase
 
         $this->end_controls_section();
 
-
         // Post metas section
         $this->start_controls_section(
             'post_meta_section',

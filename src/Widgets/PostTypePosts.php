@@ -77,21 +77,32 @@ abstract class PostTypePosts extends WidgetBase
         $this->end_controls_section();
     }
 
-    protected function render()
-    {
+    protected function getRendererOptions() {
         $settings = $this->get_settings_for_display();
-
-        $renderer = PostTypePostsRenderer::prepare(array(
+        return array(
             'post_type' => $this->post_type,
             'layout' => array_get($settings, 'post_layout', Card::LAYOUT_NAME),
             'posts_per_page' => array_get($settings, 'limit', 10),
             'featured_meta_key' => $this->featured_meta_key,
             'featured_meta_value' => $this->featured_meta_value,
-        ), static::class);
+        );
+    }
 
-        $renderer->setLayoutOptions(array(
+    protected function getLayoutOptions() {
+        $settings = $this->get_settings_for_display();
+        return array(
             'columns' => array_get($settings, 'columns', 4),
-        ));
+            'thumbnail_position' => 'top'
+        );
+    }
+
+    protected function render()
+    {
+        $renderer = PostTypePostsRenderer::prepare(
+            $this->getRendererOptions(),
+            static::class
+        );
+        $renderer->setLayoutOptions($this->getLayoutOptions());
 
         echo $renderer->render();
     }
