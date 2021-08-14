@@ -77,7 +77,8 @@ abstract class PostTypePosts extends WidgetBase
         $this->end_controls_section();
     }
 
-    protected function getRendererOptions() {
+    protected function getRendererOptions()
+    {
         $settings = $this->get_settings_for_display();
         return array(
             'post_type' => $this->post_type,
@@ -88,7 +89,8 @@ abstract class PostTypePosts extends WidgetBase
         );
     }
 
-    protected function getLayoutOptions() {
+    protected function getLayoutOptions()
+    {
         $settings = $this->get_settings_for_display();
         return array(
             'columns' => array_get($settings, 'columns', 4),
