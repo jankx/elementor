@@ -1,5 +1,5 @@
 <?php
-namespace Jankx\Elementor\Widgets;
+namespace Jankx\Elementor\Widgets\Abstracts;
 
 use Elementor\Controls_Manager;
 use Jankx;
