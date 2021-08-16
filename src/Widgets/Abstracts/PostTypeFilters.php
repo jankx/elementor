@@ -45,11 +45,10 @@ abstract class PostTypeFilters extends WidgetBase
         );
     }
 
-    protected function getActiveFilters()
+    protected function getActiveFilters($includeAll = false)
     {
-        $filters = array(
-            'all' => __('All')
-        );
+        $filters = $includeAll ? array('all' => __('All')) : array();
+
         $filters = $filters + array_map(function ($filter) {
             return $filter['label'];
         }, $this->filters);
@@ -79,14 +78,15 @@ abstract class PostTypeFilters extends WidgetBase
             $this->add_control('active_filters', [
                 'label' => __('Filters', 'jankx'),
                 'type' => Choices::CONTROL_NAME,
-                'options' => $this->getActiveFilters(),
+                'options' => $this->getActiveFilters(true),
                 'default' => $this->defaultFilters(),
+                'multiple' => true,
             ]);
         }
 
         foreach (apply_filters("jankx/elementor/{$this->get_name()}/filters", $this->filters) as $filter => $args) {
             $this->add_control(
-                $filter,
+                $filter . '_filter',
                 [
                     'label' => array_get($args, 'label'),
                     'type' => Choices::CONTROL_NAME,
@@ -139,9 +139,82 @@ abstract class PostTypeFilters extends WidgetBase
         return ['all'];
     }
 
+    protected function transformTaxonomyFilterData($filter, $options, &$transformer)
+    {
+        if (!isset($filter['taxonomy'])) {
+            return;
+        }
+        $filter['id'] = $filter['taxonomy'];
+        $args = array(
+            'taxonomy' => $filter['taxonomy'],
+            'hide_empty' => false,
+        );
+        if (in_array('all', $options)) {
+            $args['num'] = -1;
+        } else {
+            $args['include'] = array_map(function ($option) {
+                return preg_replace('/[^\d]/', '', $option);
+            }, $options);
+            $args['orderby'] = 'include';
+            $args['order'] = 'ASC';
+        }
+        $terms = get_terms($args);
+        foreach ($terms as $term) {
+            $filter['options'][] = apply_filters('jankx/filter/data/term', array(
+                'label' => $term->name,
+                'id' => $term->term_id,
+                'url' => get_term_link($term, $term->taxonomy),
+            ), $term, $filter);
+        }
+        $transformer->addData($filter);
+    }
+
+    protected function transformPostMetaFilterData($filter, $options, &$transformer)
+    {
+        if (!isset($filter['meta_key'])) {
+            return;
+        }
+        $filter['id'] = $filter['meta_key'];
+        $options = empty($options) ? array() : $filter['options'];
+        $filter['options'] = array();
+        foreach ($options as $value => $label) {
+            $filter['options'][] = apply_filters('jankx/filter/data/post_meta', array(
+                'label' => $label,
+                'id' => $value,
+            ));
+        }
+
+        $transformer->addData($filter);
+    }
+
     protected function createFiltersViaArrayTransfomer()
     {
         $transformer = new ArraysToFilterDataTransformer();
+        $settings = $this->get_settings_for_display();
+
+        $activeFilters = array_get($settings, 'active_filters', ['all']);
+        $activeFilters = in_array('all', $activeFilters)
+            ? array_keys($this->getActiveFilters(false))
+            : $activeFilters;
+
+        foreach ($activeFilters as $activeFilter) {
+            if (!isset($this->filters[$activeFilter])) {
+                continue;
+            }
+            $filter = $this->filters[$activeFilter];
+            $options = array_get($settings, $activeFilter . '_filter', ['all']);
+            if (empty($options)) {
+                continue;
+            }
+
+            switch (array_get($filter, 'type')) {
+                case 'taxonomy':
+                    $this->transformTaxonomyFilterData($filter, $options, $transformer);
+                    break;
+                case 'post_meta':
+                    $this->transformPostMetaFilterData($filter, $options, $transformer);
+            }
+        }
 
         return $transformer->getFilterDatas();
     }

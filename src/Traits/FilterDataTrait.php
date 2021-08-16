@@ -19,7 +19,6 @@ trait FilterDataTrait
         foreach ($terms as $term) {
             $ret[sprintf('%s_%d', $term->taxonomy, $term->term_id)] = $term->name;
         }
-
         return $ret;
     }
 
