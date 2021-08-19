@@ -131,8 +131,8 @@ class PageSelector extends WidgetBase
             'style' => array_get($settings, 'item_style', 'simple'),
             'columns' => array_get($settings, 'columns', 4),
             'rows' => array_get($settings, 'rows', 1),
-            'show_post_thumbnail' => array($settings, 'show_thumbnail'),
-            'thumbnail_size' => array($settings, 'thumbnail_size', 'medium'),
+            'show_post_thumbnail' => array_get($settings, 'show_thumbnail'),
+            'thumbnail_size' => array_get($settings, 'thumbnail_size', 'medium'),
         ));
 
         echo $postsRenderer->render();
