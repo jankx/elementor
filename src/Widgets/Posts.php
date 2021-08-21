@@ -11,6 +11,7 @@ use Jankx\PostLayout\Layout\ListLayout;
 use Jankx\PostLayout\Layout\Card;
 use Jankx\PostLayout\Layout\Carousel;
 use Jankx\PostLayout\Layout\Preset3;
+use Jankx\PostLayout\Layout\Preset5;
 
 class Posts extends WidgetBase
 {
@@ -95,6 +96,20 @@ class Posts extends WidgetBase
                 'tab' => Controls_Manager::TAB_CONTENT,
             ]
         );
+
+        $this->add_control(
+            'title',
+            [
+                'label' => esc_html__('Title', 'elementor'),
+                'type' => Controls_Manager::TEXTAREA,
+                'dynamic' => [
+                    'active' => true,
+                ],
+                'placeholder' => esc_html__('Enter your title', 'elementor'),
+                'default' => esc_html__('Add Your Heading Text Here', 'elementor'),
+            ]
+        );
+
 
         $this->add_control(
             'post_type',
@@ -183,6 +198,22 @@ class Posts extends WidgetBase
             ]
         );
 
+
+        $this->add_control(
+            'show_carousel_pagination',
+            [
+                'label' => __('Carousel Pagination', 'jankx'),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => __('Show', 'jankx'),
+                'label_off' => __('Hide', 'jankx'),
+                'return_value' => 'yes',
+                'default' => 'no',
+                'condition' => array(
+                    'post_layout' => array(Carousel::LAYOUT_NAME, Preset5::LAYOUT_NAME)
+                )
+            ]
+        );
+
         $this->addThumbnailControls();
 
         $this->add_control(
@@ -198,32 +229,6 @@ class Posts extends WidgetBase
             ]
         );
 
-        $this->add_control(
-            'show_post_excerpt',
-            [
-                'label' => __('Show Excerpt', 'jankx'),
-                'type' => Controls_Manager::SWITCHER,
-                'label_on' => __('Show', 'jankx'),
-                'label_off' => __('Hide', 'jankx'),
-                'return_value' => 'yes',
-                'default' => 'no',
-            ]
-        );
-
-        $this->add_control(
-            'excerpt_length',
-            [
-                'label' => __('Excerpt length', 'jankx'),
-                'type' => Controls_Manager::NUMBER,
-                'min' => 0,
-                'max' => 100,
-                'step' => 1,
-                'default' => 15,
-                'condition' => array(
-                    'show_post_excerpt' => 'yes'
-                )
-            ]
-        );
 
         // Define extra controls
         $this->registerExtraControls();
@@ -255,7 +260,23 @@ class Posts extends WidgetBase
                 'default' => 1,
                 'of_type' => 'post_layout',
                 'condition' => array(
-                    'post_layout' => array(Carousel::LAYOUT_NAME)
+                    'post_layout' => array(Carousel::LAYOUT_NAME, Preset5::LAYOUT_NAME)
+                )
+            ]
+        );
+
+        $this->add_control(
+            'last_columns_items',
+            [
+                'label' => __('Last Column Items', 'jankx'),
+                'type' => Controls_Manager::NUMBER,
+                'min' => 1,
+                'max' => 10,
+                'step' => 1,
+                'default' => 3,
+                'of_type' => 'post_layout',
+                'condition' => array(
+                    'post_layout' => array(Preset5::LAYOUT_NAME)
                 )
             ]
         );
@@ -284,6 +305,32 @@ class Posts extends WidgetBase
             ]
         );
 
+
+        $this->add_control(
+            'show_post_excerpt',
+            [
+                'label' => __('Show Excerpt', 'jankx'),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => __('Show', 'jankx'),
+                'label_off' => __('Hide', 'jankx'),
+                'return_value' => 'yes',
+                'default' => 'no',
+            ]
+        );
+
+
+        $this->add_control(
+            'excerpt_length',
+            [
+                'label' => __('Excerpt length', 'jankx'),
+                'type' => Controls_Manager::NUMBER,
+                'min' => 0,
+                'max' => 100,
+                'step' => 1,
+                'default' => 20,
+            ]
+        );
+
         $this->add_control(
             'show_postdate',
             [
@@ -299,10 +346,6 @@ class Posts extends WidgetBase
         do_action('jankx_integration_elementor_posts_widget_metas', $this);
 
         $this->end_controls_section();
-    }
-
-    protected function _content_template()
-    {
     }
 
     public function get_script_depends()
@@ -340,8 +383,8 @@ class Posts extends WidgetBase
         $postsRenderer = PostsRenderer::prepare(array(
             'post_type' => array_get($settings, 'post_type', 'post'),
             'post_format'  => array_get($settings, 'post_format', 'standard'),
-            'show_excerpt'  => array_get($settings, 'show_post_excerpt', false),
-            'show_postdate'  => array_get($settings, 'show_postdate', true),
+            'show_excerpt'  => array_get($settings, 'show_post_excerpt', 'no') === 'yes',
+            'show_postdate'  => array_get($settings, 'show_postdate', 'no') == 'yes',
             'excerpt_length'  => array_get($settings, 'excerpt_length', 15),
             'categories'  => array_get($settings, 'post_categories', []),
             'tags'  => array_get($settings, 'post_tags', []),
@@ -354,8 +397,20 @@ class Posts extends WidgetBase
             'layout'  => array_get($settings, 'post_layout', Card::LAYOUT_NAME),
             'show_thumbnail'  => array_get($settings, 'show_post_thumbnail', true),
             'thumbnail_size'  => array_get($settings, 'thumbnail_size', 'thumbnail'),
+            'last_columns_items'  => array_get($settings, 'last_columns_items', 3),
+            'show_dot'  => array_get($settings, 'show_carousel_pagination', 'no') === 'yes',
         ));
 
-        echo $postsRenderer->render();
+        $widgetContent = $postsRenderer->render();
+
+        if (($widgetTitle = array_get($settings, 'title')) && $widgetContent) {
+            echo sprintf(
+                '<h3 class="jankx-posts-title">
+                   <span>%s</span>
+                </h3>',
+                $widgetTitle
+            );
+        }
+        echo $widgetContent;
     }
 }
