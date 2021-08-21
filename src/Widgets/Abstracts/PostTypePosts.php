@@ -62,6 +62,9 @@ abstract class PostTypePosts extends WidgetBase
             'default' => Card::LAYOUT_NAME,
         ));
 
+        $this->addThumbnailControls();
+        $this->registerExtraControls();
+
         $this->add_control('columns', array(
             'label' => __('Columns', 'jankx'),
             'type' => Controls_Manager::NUMBER,
@@ -83,7 +86,7 @@ abstract class PostTypePosts extends WidgetBase
         return array(
             'post_type' => $this->post_type,
             'layout' => array_get($settings, 'post_layout', Card::LAYOUT_NAME),
-            'posts_per_page' => array_get($settings, 'limit', 10),
+            'posts_per_page'  => array_get($settings, 'limit', 10),
             'featured_meta_key' => $this->featured_meta_key,
             'featured_meta_value' => $this->featured_meta_value,
         );
@@ -94,7 +97,11 @@ abstract class PostTypePosts extends WidgetBase
         $settings = $this->get_settings_for_display();
         return array(
             'columns' => array_get($settings, 'columns', 4),
-            'thumbnail_position' => 'top'
+            'show_thumbnail' => array_get($settings, 'show_thumbnail', true),
+            'thumbnail_size' => array_get($settings, 'thumbnail_size', 'thumbnail'),
+            'thumbnail_position' => 'top',
+            'item_style' => array_get($settings, 'item_style'),
+
         );
     }
 

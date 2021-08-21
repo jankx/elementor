@@ -194,6 +194,7 @@ abstract class PostTypeTabs extends WidgetBase
             'layout' => array_get($settings, 'post_layout', Card::LAYOUT_NAME),
             'tabs' => $this->transformElementorSettingsToTabs(),
             'post_type' => $this->get_post_types(),
+            'posts_per_page' => array_get($settings, 'limit', 10)
         ));
         $renderer->setLayoutOptions(
             $this->preparingRenderLayout(['columns' => array_get($settings, 'columns', 4)])
