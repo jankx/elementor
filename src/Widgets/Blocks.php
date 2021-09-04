@@ -61,7 +61,7 @@ class Blocks extends WidgetBase
         return $ret;
     }
 
-    protected function _register_controls()
+    protected function register_controls()
     {
         $this->start_controls_section(
             'content_section',

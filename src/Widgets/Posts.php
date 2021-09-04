@@ -89,14 +89,15 @@ class Posts extends WidgetBase
         return $postTypes;
     }
 
-    protected function get_orderby() {
+    protected function get_orderby()
+    {
         $orderBy = WP_Query::order_by();
         $orderBy['specific'] = __('Specifics', 'jankx_elementor');
 
         return $orderBy;
     }
 
-    protected function _register_controls()
+    protected function register_controls()
     {
         $this->start_controls_section(
             'content_section',
@@ -249,6 +250,33 @@ class Posts extends WidgetBase
                 'type' => Controls_Manager::SELECT,
                 'default' => 'none',
                 'options' => $this->get_orderby()
+            ]
+        );
+        $this->add_control(
+            'sort',
+            [
+                'label' => __('Sort', 'jankx'),
+                'type' => Controls_Manager::SELECT,
+                'default' => 'ASC',
+                'options' => array(
+                    'ASC' => __('Ascending'),
+                    'DESC' => __('Descending')
+                ),
+                'condition' => array(
+                    'orderby' => WP_Query::order_by(true),
+                )
+            ]
+        );
+        $this->add_control(
+            'specific_data',
+            [
+                'label' => __('Specific Posts', 'jankx'),
+                'type' => Controls_Manager::TEXT,
+                'default' => '',
+                'of_control' => 'orderby',
+                'condition' => array(
+                    'orderby' => 'specific',
+                )
             ]
         );
 
@@ -418,6 +446,9 @@ class Posts extends WidgetBase
             'thumbnail_size'  => array_get($settings, 'thumbnail_size', 'thumbnail'),
             'last_columns_items'  => array_get($settings, 'last_columns_items', 3),
             'show_dot'  => array_get($settings, 'show_carousel_pagination', 'no') === 'yes',
+            'orderby'  => array_get($settings, 'orderby', 'none'),
+            'order'  => array_get($settings, 'sort', 'ASC'),
+            'specific_data' => array_get($settings, 'specific_data', '')
         ));
 
         $widgetContent = $postsRenderer->render();

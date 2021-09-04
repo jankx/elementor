@@ -164,4 +164,12 @@ abstract class WidgetBase extends Widget_Base
     protected function registerExtraControls()
     {
     }
+
+    public function _register_controls()
+    {
+        return call_user_func_array(
+            array($this, 'register_controls'),
+            func_get_args()
+        );
+    }
 }

@@ -40,7 +40,7 @@ class PageSelector extends WidgetBase
         );
     }
 
-    protected function _register_controls()
+    protected function register_controls()
     {
         $page_options = $this->get_page_options('item');
 
