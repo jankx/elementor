@@ -2,6 +2,8 @@
 namespace Jankx\Elementor\Widgets;
 
 use Jankx;
+use Jankx\Specs\WP_Query;
+
 use Elementor\Controls_Manager;
 use Jankx\Widget\Renderers\PostsRenderer;
 use Jankx\Elementor\WidgetBase;
@@ -85,6 +87,13 @@ class Posts extends WidgetBase
             $postTypes[$postType] = $object->label;
         }
         return $postTypes;
+    }
+
+    protected function get_orderby() {
+        $orderBy = WP_Query::order_by();
+        $orderBy['specific'] = __('Specifics', 'jankx_elementor');
+
+        return $orderBy;
     }
 
     protected function _register_controls()
@@ -232,6 +241,16 @@ class Posts extends WidgetBase
 
         // Define extra controls
         $this->registerExtraControls();
+
+        $this->add_control(
+            'orderby',
+            [
+                'label' => __('Order by', 'jankx'),
+                'type' => Controls_Manager::SELECT,
+                'default' => 'none',
+                'options' => $this->get_orderby()
+            ]
+        );
 
         $this->add_control(
             'columns',
