@@ -7,6 +7,8 @@ use Jankx\PostLayout\PostLayoutManager;
 
 abstract class WidgetBase extends Widget_Base
 {
+    protected $settings;
+
     protected function getImageSizeName($sizeName)
     {
         switch ($sizeName) {
@@ -171,5 +173,25 @@ abstract class WidgetBase extends Widget_Base
             array($this, 'register_controls'),
             func_get_args()
         );
+    }
+
+    public function get_responsive_setting($field_name, $default_value)
+    {
+        if (is_null($this->settings)) {
+            $this->settings = $this->get_settings_for_display();
+        }
+        $settings = &$this->settings;
+        $desktop_value = array_get($settings, $field_name, $default_value);
+
+        if (jankx_is_mobile()) {
+            $mobile_value = array_get($settings, sprintf('%s_mobile', $field_name));
+            return $mobile_value ? $mobile_value : $desktop_value;
+        }
+        if (jankx_is_tablet()) {
+            $tablet_value = array_get($settings, sprintf('%s_tablet', $field_name));
+            return $tablet_value ? $tablet_value : $desktop_value;
+        }
+
+        return $desktop_value;
     }
 }

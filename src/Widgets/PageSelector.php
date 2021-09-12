@@ -8,6 +8,7 @@ use Jankx\PostLayout\PostLayoutManager;
 use Jankx\PostLayout\Layout\Card;
 use Jankx\PostLayout\Layout\Carousel;
 use Jankx\PostLayout\Layout\Grid;
+use Jankx\PostLayout\Layout\Preset5;
 use Jankx\Widget\Renderers\PageSelectorRenderer;
 use AdvancedElementor\Controls\Choices;
 
@@ -61,7 +62,7 @@ class PageSelector extends WidgetBase
             'default' => array(),
         ]);
 
-        $this->add_control(
+        $this->add_responsive_control(
             'post_layout',
             [
                 'label' => __('Layout', 'jankx'),
@@ -86,7 +87,7 @@ class PageSelector extends WidgetBase
 
         $this->addThumbnailControls();
 
-        $this->add_control(
+        $this->add_responsive_control(
             'columns',
             [
                 'label' => __('Columns', 'jankx'),
@@ -102,7 +103,7 @@ class PageSelector extends WidgetBase
             ]
         );
 
-        $this->add_control(
+        $this->add_responsive_control(
             'rows',
             [
                 'label' => __('Rows', 'jankx'),
@@ -113,7 +114,8 @@ class PageSelector extends WidgetBase
                 'default' => 1,
                 'of_type' => 'post_layout',
                 'condition' => array(
-                    'post_layout' => array(Carousel::LAYOUT_NAME)
+                    'post_layout' => array(Carousel::LAYOUT_NAME, Preset5::LAYOUT_NAME),
+                    'post_layout_mobile' => array(Carousel::LAYOUT_NAME, Preset5::LAYOUT_NAME),
                 )
             ]
         );
@@ -127,12 +129,14 @@ class PageSelector extends WidgetBase
 
         $postsRenderer = PageSelectorRenderer::prepare(array(
             'pages' => array_get($settings, 'selected_pages', []),
-            'layout' => array_get($settings, 'post_layout', Card::LAYOUT_NAME),
             'style' => array_get($settings, 'item_style', 'simple'),
-            'columns' => array_get($settings, 'columns', 4),
-            'rows' => array_get($settings, 'rows', 1),
             'show_post_thumbnail' => array_get($settings, 'show_thumbnail'),
             'thumbnail_size' => array_get($settings, 'thumbnail_size', 'medium'),
+            'columns_mobile' => array_get($settings, 'columns_mobile'),
+            'columns_tablet' => array_get($settings, 'columns_tablet'),
+            'columns' => $this->get_responsive_setting('columns', 4),
+            'rows' => $this->get_responsive_setting('rows', 1),
+            'layout' => $this->get_responsive_setting('post_layout', Card::LAYOUT_NAME),
         ));
 
         echo $postsRenderer->render();

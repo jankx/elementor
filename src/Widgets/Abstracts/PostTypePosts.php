@@ -52,7 +52,7 @@ abstract class PostTypePosts extends WidgetBase
             'default' => 'recents',
         ));
 
-        $this->add_control('post_layout', array(
+        $this->add_responsive_control('post_layout', array(
             'label' => __('Layout', 'jankx'),
             'type' => Controls_Manager::SELECT,
             'options' => PostLayoutManager::getLayouts(array(
@@ -65,13 +65,19 @@ abstract class PostTypePosts extends WidgetBase
         $this->addThumbnailControls();
         $this->registerExtraControls();
 
-        $this->add_control('columns', array(
+        $this->add_responsive_control('columns', array(
             'label' => __('Columns', 'jankx'),
             'type' => Controls_Manager::NUMBER,
             'default' => 4,
         ));
 
-        $this->add_control('limit', array(
+        $this->add_responsive_control('rows', array(
+            'label' => __('Rows', 'jankx'),
+            'type' => Controls_Manager::NUMBER,
+            'default' => 1,
+        ));
+
+        $this->add_responsive_control('limit', array(
             'label' => __('Limit', 'jankx'),
             'type' => Controls_Manager::NUMBER,
             'default' => 10,
@@ -85,8 +91,8 @@ abstract class PostTypePosts extends WidgetBase
         $settings = $this->get_settings_for_display();
         return array(
             'post_type' => $this->post_type,
-            'layout' => array_get($settings, 'post_layout', Card::LAYOUT_NAME),
-            'posts_per_page'  => array_get($settings, 'limit', 10),
+            'layout' => $this->get_responsive_setting('post_layout', Card::LAYOUT_NAME),
+            'posts_per_page'  => $this->get_responsive_setting('limit', 10),
             'featured_meta_key' => $this->featured_meta_key,
             'featured_meta_value' => $this->featured_meta_value,
         );
@@ -96,12 +102,12 @@ abstract class PostTypePosts extends WidgetBase
     {
         $settings = $this->get_settings_for_display();
         return array(
-            'columns' => array_get($settings, 'columns', 4),
             'show_thumbnail' => array_get($settings, 'show_thumbnail', true),
             'thumbnail_size' => array_get($settings, 'thumbnail_size', 'thumbnail'),
             'thumbnail_position' => 'top',
             'item_style' => array_get($settings, 'item_style'),
-
+            'columns' => $this->get_responsive_setting('columns', 4),
+            'rows' => $this->get_responsive_setting('rows', 4),
         );
     }
 

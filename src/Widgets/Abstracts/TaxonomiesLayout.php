@@ -1,5 +1,5 @@
 <?php
-namespace Jankx\Elementor\Widgets;
+namespace Jankx\Elementor\Widgets\Abstracts;
 
 use Jankx;
 use WP_Term_Query;
@@ -9,6 +9,7 @@ use AdvancedElementor\Controls\Choices;
 use Jankx\Widget\Renderers\TaxonomiesLayoutRenderer;
 use Jankx\PostLayout\PostLayoutManager;
 use Jankx\PostLayout\TermLayout\Card;
+use Jankx\PostLayout\TermLayout\Carousel;
 
 abstract class TaxonomiesLayout extends WidgetBase
 {
@@ -97,7 +98,7 @@ abstract class TaxonomiesLayout extends WidgetBase
             )
         );
 
-        $this->add_control(
+        $this->add_responsive_control(
             'layout',
             [
                 'label' => __('Layout', 'jankx'),
@@ -119,7 +120,7 @@ abstract class TaxonomiesLayout extends WidgetBase
              ]
          );
 
-        $this->add_control(
+        $this->add_responsive_control(
             'columns',
             [
                 'label' => __('Columns', 'jankx'),
@@ -135,7 +136,7 @@ abstract class TaxonomiesLayout extends WidgetBase
             ]
         );
 
-        $this->add_control(
+        $this->add_responsive_control(
             'rows',
             [
                 'label' => __('Rows', 'jankx'),
@@ -146,16 +147,15 @@ abstract class TaxonomiesLayout extends WidgetBase
                 'default' => 1,
                 'of_type' => 'layout',
                 'condition' => array(
-                    'layout' => array('carousel')
                 )
             ]
         );
 
-        $this->add_control(
+        $this->add_responsive_control(
             'limit',
             [
 
-                'label' => __('Number of Terms', 'jankx'),
+                'label' => __('Limit', 'jankx'),
                 'type' => Controls_Manager::NUMBER,
                 'min' => 0,
                 'max' => 100,
@@ -173,11 +173,11 @@ abstract class TaxonomiesLayout extends WidgetBase
 
         $taxonomyRenderer = TaxonomiesLayoutRenderer::prepare(array(
             'taxonomy_terms' => array_get($settings, 'taxonomy_terms'),
-            'layout' => array_get($settings, 'layout'),
+            'layout' => $this->get_responsive_setting('layout', Card::LAYOUT_NAME),
             'show_description' => array_get($settings, 'show_description'),
-            'columns' => array_get($settings, 'columns'),
-            'rows' => array_get($settings, 'rows'),
-            'limit' => array_get($settings, 'limit'),
+            'columns' => $this->get_responsive_setting('columns', 4),
+            'rows' => $this->get_responsive_setting('rows', 1),
+            'limit' => $this->get_responsive_setting('limit', 1),
             'taxonomies' => $this->taxonomies,
         ));
 

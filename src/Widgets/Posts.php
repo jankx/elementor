@@ -172,7 +172,7 @@ class Posts extends WidgetBase
             ]
         );
 
-        $this->add_control(
+        $this->add_responsive_control(
             'post_layout',
             [
                 'label' => __('Layout', 'jankx'),
@@ -280,7 +280,7 @@ class Posts extends WidgetBase
             ]
         );
 
-        $this->add_control(
+        $this->add_responsive_control(
             'columns',
             [
                 'label' => __('Columns', 'jankx'),
@@ -289,14 +289,11 @@ class Posts extends WidgetBase
                 'max' => 10,
                 'step' => 1,
                 'default' => 4,
-                'of_type' => 'post_layout',
-                'condition' => array(
-                    'post_layout' => array(Card::LAYOUT_NAME, Carousel::LAYOUT_NAME, Preset3::LAYOUT_NAME)
-                )
+                'of_type' => 'post_layout'
             ]
         );
 
-        $this->add_control(
+        $this->add_responsive_control(
             'rows',
             [
                 'label' => __('Rows', 'jankx'),
@@ -305,10 +302,6 @@ class Posts extends WidgetBase
                 'max' => 10,
                 'step' => 1,
                 'default' => 1,
-                'of_type' => 'post_layout',
-                'condition' => array(
-                    'post_layout' => array(Carousel::LAYOUT_NAME, Preset5::LAYOUT_NAME)
-                )
             ]
         );
 
@@ -328,7 +321,7 @@ class Posts extends WidgetBase
             ]
         );
 
-        $this->add_control(
+        $this->add_responsive_control(
             'posts_per_page',
             [
 
@@ -435,20 +428,22 @@ class Posts extends WidgetBase
             'excerpt_length'  => array_get($settings, 'excerpt_length', 15),
             'categories'  => array_get($settings, 'post_categories', []),
             'tags'  => array_get($settings, 'post_tags', []),
-            'posts_per_page'  => array_get($settings, 'posts_per_page', 10),
-            'columns'  => array_get($settings, 'columns', 4),
-            'rows'  => array_get($settings, 'rows', 1),
             'show_title'  => array_get($settings, 'show_post_title', true),
             'show_pagination'  => array_get($settings, 'show_pagination', false),
             'thumbnail_position'  => array_get($settings, 'thumbnail_position', 'top'),
-            'layout'  => array_get($settings, 'post_layout', Card::LAYOUT_NAME),
             'show_thumbnail'  => array_get($settings, 'show_post_thumbnail', true),
             'thumbnail_size'  => array_get($settings, 'thumbnail_size', 'thumbnail'),
             'last_columns_items'  => array_get($settings, 'last_columns_items', 3),
             'show_dot'  => array_get($settings, 'show_carousel_pagination', 'no') === 'yes',
             'orderby'  => array_get($settings, 'orderby', 'none'),
             'order'  => array_get($settings, 'sort', 'ASC'),
-            'specific_data' => array_get($settings, 'specific_data', '')
+            'specific_data' => array_get($settings, 'specific_data', ''),
+            'columns_mobile' => array_get($settings, 'columns_mobile'),
+            'columns_tablet' => array_get($settings, 'columns_tablet'),
+            'columns'  => $this->get_responsive_setting('columns', 4),
+            'posts_per_page'  => $this->get_responsive_setting('posts_per_page', 10),
+            'layout'  => $this->get_responsive_setting('post_layout', Card::LAYOUT_NAME),
+            'rows'  => $this->get_responsive_setting('rows', 1),
         ));
 
         $widgetContent = $postsRenderer->render();
