@@ -88,6 +88,30 @@ class PageSelector extends WidgetBase
         $this->addThumbnailControls();
 
         $this->add_responsive_control(
+            'show_carousel_pagination',
+            [
+                'label' => __('Carousel Pagination', 'jankx'),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => __('Show', 'jankx'),
+                'label_off' => __('Hide', 'jankx'),
+                'return_value' => 'yes',
+                'default' => 'no'
+            ]
+        );
+
+        $this->add_responsive_control(
+            'show_carousel_nav',
+            [
+                'label' => __('Carousel Nav', 'jankx'),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => __('Show', 'jankx'),
+                'label_off' => __('Hide', 'jankx'),
+                'return_value' => 'yes',
+                'default' => 'no'
+            ]
+        );
+
+        $this->add_responsive_control(
             'columns',
             [
                 'label' => __('Columns', 'jankx'),
@@ -137,6 +161,8 @@ class PageSelector extends WidgetBase
             'columns' => $this->get_responsive_setting('columns', 4),
             'rows' => $this->get_responsive_setting('rows', 1),
             'layout' => $this->get_responsive_setting('post_layout', Card::LAYOUT_NAME),
+            'show_dot'  => $this->get_responsive_setting('show_carousel_pagination', 'no') === 'yes',
+            'show_nav'  => $this->get_responsive_setting('show_carousel_nav', 'no') === 'yes',
         ));
 
         echo $postsRenderer->render();

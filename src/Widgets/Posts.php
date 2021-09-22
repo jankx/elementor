@@ -224,6 +224,21 @@ class Posts extends WidgetBase
             ]
         );
 
+        $this->add_responsive_control(
+            'show_carousel_nav',
+            [
+                'label' => __('Carousel Nav', 'jankx'),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => __('Show', 'jankx'),
+                'label_off' => __('Hide', 'jankx'),
+                'return_value' => 'yes',
+                'default' => 'yes',
+                'condition' => array(
+                    'post_layout' => array(Carousel::LAYOUT_NAME, Preset5::LAYOUT_NAME)
+                )
+            ]
+        );
+
         $this->addThumbnailControls();
 
         $this->add_control(
@@ -435,6 +450,7 @@ class Posts extends WidgetBase
             'thumbnail_size'  => array_get($settings, 'thumbnail_size', 'thumbnail'),
             'last_columns_items'  => array_get($settings, 'last_columns_items', 3),
             'show_dot'  => array_get($settings, 'show_carousel_pagination', 'no') === 'yes',
+            'show_nav'  => $this->get_responsive_setting('show_carousel_nav', 'yes') === 'yes',
             'orderby'  => array_get($settings, 'orderby', 'none'),
             'order'  => array_get($settings, 'sort', 'ASC'),
             'specific_data' => array_get($settings, 'specific_data', ''),
