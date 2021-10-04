@@ -5,6 +5,7 @@ use Jankx;
 use Elementor\Controls_Manager;
 use AdvancedElementor\Controls\Choices;
 use Jankx\Elementor\Traits\FilterDataTrait;
+use ELementor\Widget_Base;
 use Jankx\Elementor\WidgetBase;
 use Jankx\Filter\FilterManager;
 use Jankx\Filter\Renderer\PostTypeFiltersRenderer;
@@ -23,7 +24,7 @@ abstract class PostTypeFilters extends WidgetBase
 
     public function __construct($data = array(), $args = null)
     {
-        parent::__construct($data, $args);
+        Widget_Base::__construct($data, $args);
         $this->filters = apply_filters(
             "jankx/elementor/{$this->get_name()}/filters",
             $this->filters()
