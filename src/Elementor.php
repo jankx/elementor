@@ -14,7 +14,6 @@ use Jankx\Elementor\Widgets\PostsTabs;
 use Jankx\Elementor\Widgets\Blocks;
 use Jankx\Elementor\Widgets\PageSelector;
 use Jankx\Elementor\Widgets\SocialSharing;
-use Jankx\TemplateLoader;
 
 class Elementor
 {
