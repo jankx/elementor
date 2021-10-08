@@ -1,9 +1,10 @@
 <?php
 use Jankx\Elementor\Elementor;
+use Elementor\Plugin;
 
 define( 'JANKX_ELEMENTOR_ROOT_DIR', dirname(__FILE__) );
 
-if (class_exists(Elementor::class))
+if (class_exists(Elementor::class) && class_exists(Plugin::class))
 {
     $elementor = new Elementor();
     add_action(
