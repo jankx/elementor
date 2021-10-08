@@ -460,11 +460,9 @@ class Posts extends WidgetBase
             'posts_per_page'  => $this->get_responsive_setting('posts_per_page', 10),
             'layout'  => $this->get_responsive_setting('post_layout', Card::LAYOUT_NAME),
             'rows'  => $this->get_responsive_setting('rows', 1),
-        ));
+        ));;
 
-        $widgetContent = $postsRenderer->render();
-
-        if (($widgetTitle = array_get($settings, 'title')) && $widgetContent) {
+        if (($widgetTitle = array_get($settings, 'title')) && $postsRenderer->hasContent()) {
             echo sprintf(
                 '<h3 class="jankx-posts-title">
                    <span>%s</span>
@@ -472,6 +470,6 @@ class Posts extends WidgetBase
                 $widgetTitle
             );
         }
-        echo $widgetContent;
+        echo $postsRenderer->render();
     }
 }
