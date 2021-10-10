@@ -1,8 +1,6 @@
 <?php
 namespace Jankx\Elementor;
 
-use Jankx\Template\Page;
-use Jankx\SiteLayout\SiteLayout;
 use Elementor\Core\Settings\Manager;
 use Elementor\Core\Responsive\Responsive;
 use Jankx\Asset\CustomizableAsset;
