@@ -15,8 +15,14 @@ class Layout
 
     public function integrateTemplateClasses()
     {
-        if (is_singular() && \Elementor\Plugin::instance()->db->is_built_with_elementor(get_the_ID())) {
-            add_filter('jankx_template_disable_main_content_sidebar_container', '__return_true');
+        $document = \Elementor\Plugin::instance()->documents->get(get_the_ID());
+        if (is_singular() && $document->is_built_with_elementor()) {
+            $settings = array_get($document->get_data(), 'settings');
+            $template = array_get($settings, 'template', 'default');
+
+            add_filter('jankx_template_disable_main_content_sidebar_container', function() use ($template) {
+                return $template === 'elementor_header_footer';
+            });
 
             if (apply_filters('jankx_template_enable_compatible_elementor_container', true)) {
                 add_action('jankx_template_before_open_container', array($this, 'openElementorSelectionClass'));
