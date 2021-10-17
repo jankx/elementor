@@ -37,7 +37,6 @@ class LinkTabs extends WidgetBase
             'label' => __('Tabs', 'jankx'),
             'type' => Controls_Manager::REPEATER,
             'fields' => $repeaterLinkTabControl->get_controls(),
-            'title_field' => __('Link tab', 'jankx'),
         ));
         $this->end_controls_section();
     }
