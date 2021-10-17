@@ -20,7 +20,7 @@ class Layout
             $settings = array_get($document->get_data(), 'settings');
             $template = array_get($settings, 'template', 'default');
 
-            add_filter('jankx_template_disable_main_content_sidebar_container', function() use ($template) {
+            add_filter('jankx_template_disable_main_content_sidebar_container', function () use ($template) {
                 return $template === 'elementor_header_footer';
             });
 

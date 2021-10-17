@@ -14,6 +14,7 @@ use Jankx\Elementor\Widgets\PostsTabs;
 use Jankx\Elementor\Widgets\Blocks;
 use Jankx\Elementor\Widgets\PageSelector;
 use Jankx\Elementor\Widgets\SocialSharing;
+use Jankx\Elementor\Widgets\LinkTabs;
 
 class Elementor
 {
@@ -73,6 +74,7 @@ class Elementor
         $widgetsManager->register_widget_type(new PostsTabs());
         $widgetsManager->register_widget_type(new PageSelector());
         $widgetsManager->register_widget_type(new SocialSharing());
+        $widgetsManager->register_widget_type(new LinkTabs());
 
         if (class_exists(BlockPostType::class)) {
             $widgetsManager->register_widget_type(new Blocks());
