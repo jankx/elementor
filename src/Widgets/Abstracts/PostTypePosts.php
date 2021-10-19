@@ -88,7 +88,6 @@ abstract class PostTypePosts extends WidgetBase
 
     protected function getRendererOptions()
     {
-        $settings = $this->get_settings_for_display();
         return array(
             'post_type' => $this->post_type,
             'layout' => $this->get_responsive_setting('post_layout', Card::LAYOUT_NAME),
@@ -101,13 +100,16 @@ abstract class PostTypePosts extends WidgetBase
     protected function getLayoutOptions()
     {
         $settings = $this->get_settings_for_display();
-        return array(
-            'show_thumbnail' => array_get($settings, 'show_thumbnail', true),
-            'thumbnail_size' => array_get($settings, 'thumbnail_size', 'thumbnail'),
-            'thumbnail_position' => 'top',
-            'item_style' => array_get($settings, 'item_style'),
-            'columns' => $this->get_responsive_setting('columns', 4),
-            'rows' => $this->get_responsive_setting('rows', 4),
+        return apply_filters(
+            "jankx/elementor/{$this->post_type}/layout/options",
+            array(
+                'show_thumbnail' => array_get($settings, 'show_thumbnail', true),
+                'thumbnail_size' => array_get($settings, 'thumbnail_size', 'thumbnail'),
+                'thumbnail_position' => 'top',
+                'item_style' => array_get($settings, 'item_style'),
+                'columns' => $this->get_responsive_setting('columns', 4),
+                'rows' => $this->get_responsive_setting('rows', 4),
+            )
         );
     }
 
