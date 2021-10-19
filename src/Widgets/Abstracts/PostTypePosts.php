@@ -113,6 +113,11 @@ abstract class PostTypePosts extends WidgetBase
         );
     }
 
+    public function queryArgs($args)
+    {
+        return $args;
+    }
+
     protected function render()
     {
         $renderer = PostTypePostsRenderer::prepare(
@@ -121,6 +126,10 @@ abstract class PostTypePosts extends WidgetBase
         );
         $renderer->setLayoutOptions($this->getLayoutOptions());
 
+        add_filter("jankx/{$this->post_type}/query/args", array($this, 'queryArgs'), 10, 2);
+
         echo $renderer->render();
+
+        remove_filter("jankx/{$this->post_type}/query/args", array($this, 'queryArgs'), 10, 2);
     }
 }
