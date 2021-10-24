@@ -88,10 +88,13 @@ abstract class PostTypePosts extends WidgetBase
 
     protected function getRendererOptions()
     {
+        $settings = $this->get_settings_for_display();
+
         return array(
             'post_type' => $this->post_type,
             'layout' => $this->get_responsive_setting('post_layout', Card::LAYOUT_NAME),
             'posts_per_page'  => $this->get_responsive_setting('limit', 10),
+            'data_type' => array_get($settings, 'data_type', 'recents'),
             'featured_meta_key' => $this->featured_meta_key,
             'featured_meta_value' => $this->featured_meta_value,
         );
