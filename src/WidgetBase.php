@@ -175,7 +175,7 @@ abstract class WidgetBase extends Widget_Base
         );
     }
 
-    public function get_responsive_setting($field_name, $default_value)
+    public function get_responsive_setting($field_name, $default_value = null)
     {
         if (is_null($this->settings)) {
             $this->settings = $this->get_settings_for_display();
