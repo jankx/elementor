@@ -200,6 +200,8 @@ abstract class PostTypeTabs extends WidgetBase
             $this->preparingRenderLayout(['columns' => array_get($settings, 'columns', 4)])
         );
 
+        do_action("jankx/{$this->postType}/tabs/render/init", $this, $renderer);
         echo $renderer->render();
+        do_action("jankx/{$this->postType}/tabs/render/end", $this, $renderer);
     }
 }
