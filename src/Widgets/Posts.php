@@ -197,7 +197,7 @@ class Posts extends WidgetBase
         );
 
         $this->add_control(
-            'show_pagination',
+            'show_paginate',
             [
                 'label' => __('Show Pagination', 'jankx'),
                 'type' => Controls_Manager::SWITCHER,
@@ -444,7 +444,7 @@ class Posts extends WidgetBase
             'categories'  => array_get($settings, 'post_categories', []),
             'tags'  => array_get($settings, 'post_tags', []),
             'show_title'  => array_get($settings, 'show_post_title', true),
-            'show_pagination'  => array_get($settings, 'show_pagination', false),
+            'show_paginate'  => array_get($settings, 'show_paginate', false),
             'thumbnail_position'  => array_get($settings, 'thumbnail_position', 'top'),
             'show_thumbnail'  => array_get($settings, 'show_post_thumbnail', true),
             'thumbnail_size'  => array_get($settings, 'thumbnail_size', 'thumbnail'),
