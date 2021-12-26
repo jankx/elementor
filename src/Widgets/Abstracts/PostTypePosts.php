@@ -97,6 +97,7 @@ abstract class PostTypePosts extends WidgetBase
             'data_type' => array_get($settings, 'data_type', 'recents'),
             'featured_meta_key' => $this->featured_meta_key,
             'featured_meta_value' => $this->featured_meta_value,
+            'show_paginate' => $this->get_responsive_setting('show_paginate', 'no') === 'yes',
         );
     }
 
@@ -112,6 +113,8 @@ abstract class PostTypePosts extends WidgetBase
                 'item_style' => array_get($settings, 'item_style'),
                 'columns' => $this->get_responsive_setting('columns', 4),
                 'rows' => $this->get_responsive_setting('rows', 4),
+                'show_paginate' => $this->get_responsive_setting('show_paginate', 'no') === 'yes',
+                'pagination_type' => $this->get_responsive_setting('pagination_type', 'default'),
             )
         );
     }
