@@ -9,6 +9,7 @@ use AdvancedElementor\Controls\Choices;
 
 use Jankx;
 use Jankx\Blocks\PostType as BlockPostType;
+use Jankx\Elementor\Filters\PostContentStylesFilter;
 use Jankx\Elementor\Widgets\Posts;
 use Jankx\Elementor\Widgets\PostsTabs;
 use Jankx\Elementor\Widgets\Blocks;
@@ -50,6 +51,8 @@ class Elementor
         }
 
         add_action('wp_enqueue_scripts', array($this, 'registerScripts'));
+
+        Jankx::addFilter(PostContentStylesFilter::class);
     }
 
     public function registerJankxCategory($elementsManager)
