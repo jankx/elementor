@@ -167,14 +167,6 @@ abstract class WidgetBase extends Widget_Base
     {
     }
 
-    public function _register_controls()
-    {
-        return call_user_func_array(
-            array($this, 'register_controls'),
-            func_get_args()
-        );
-    }
-
     public function get_responsive_setting($field_name, $default_value = null)
     {
         if (is_null($this->settings)) {
