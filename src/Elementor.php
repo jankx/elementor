@@ -6,13 +6,13 @@ use Elementor\Controls_Manager;
 use Elementor\Plugin;
 use Elementor\Preview;
 use AdvancedElementor\Controls\Choices;
-
 use Jankx;
 use Jankx\Blocks\PostType as BlockPostType;
 use Jankx\Elementor\Filters\PostContentStylesFilter;
 use Jankx\Elementor\Widgets\Posts;
 use Jankx\Elementor\Widgets\PostsTabs;
 use Jankx\Elementor\Widgets\Blocks;
+use Jankx\Elementor\Widgets\GradientHeading;
 use Jankx\Elementor\Widgets\PageSelector;
 use Jankx\Elementor\Widgets\SocialSharing;
 use Jankx\Elementor\Widgets\LinkTabs;
@@ -25,9 +25,13 @@ class Elementor
     protected static $assetDirUrl;
     protected static $elementorCategory;
 
+    protected static $elementorVersion;
+    protected static $registerWidgetMethod;
+
     public function integrate()
     {
         static::$elementorCategory = Jankx::templateStylesheet();
+        static::$elementorVersion  = Elementor::VERSION;
         Controls_Manager::add_tab(
             'post_meta',
             __('Post Meta', 'jankx')
@@ -71,16 +75,35 @@ class Elementor
         $controls_manager->register_control(Choices::CONTROL_NAME, new Choices());
     }
 
+    /**
+     * @param \Elementor\Widgets_Manager $widgetsManager
+     * @param \Elementor\Widget_Base $widget
+     *
+     * @return boolean
+     */
+    public function registerWidget($widgetsManager, $widget) {
+        if (is_null(static::$registerWidgetMethod)) {
+            static::$registerWidgetMethod = version_compare(static::$elementorVersion , '3.5.0')
+                ? 'register'
+                : 'register_widget_type';
+        }
+        return call_user_func([$widgetsManager, static::$registerWidgetMethod], $widget);
+    }
+
+    /**
+     * @param \Elementor\Widgets_Manager $widgetsManager
+     */
     public function registerJankxWidgets($widgetsManager)
     {
-        $widgetsManager->register_widget_type(new Posts());
-        $widgetsManager->register_widget_type(new PostsTabs());
-        $widgetsManager->register_widget_type(new PageSelector());
-        $widgetsManager->register_widget_type(new SocialSharing());
-        $widgetsManager->register_widget_type(new LinkTabs());
+        $this->registerWidget($widgetsManager, new Posts());
+        $this->registerWidget($widgetsManager, new PostsTabs());
+        $this->registerWidget($widgetsManager, new PageSelector());
+        $this->registerWidget($widgetsManager, new SocialSharing());
+        $this->registerWidget($widgetsManager, new LinkTabs());
+        $this->registerWidget($widgetsManager, new GradientHeading());
 
         if (class_exists(BlockPostType::class)) {
-            $widgetsManager->register_widget_type(new Blocks());
+            $this->registerWidget($widgetsManager, new Blocks());
         }
     }
 
