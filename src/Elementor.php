@@ -8,6 +8,7 @@ use Elementor\Preview;
 use AdvancedElementor\Controls\Choices;
 use Jankx;
 use Jankx\Blocks\PostType as BlockPostType;
+use Jankx\Elementor\Compatibles\Bootstrap;
 use Jankx\Elementor\Filters\PostContentStylesFilter;
 use Jankx\Elementor\Widgets\Posts;
 use Jankx\Elementor\Widgets\PostsTabs;
@@ -57,6 +58,10 @@ class Elementor
         add_action('wp_enqueue_scripts', array($this, 'registerScripts'));
 
         Jankx::addFilter(PostContentStylesFilter::class);
+
+        // Make compatibles with other features
+        $compatibles = new Bootstrap();
+        $compatibles->makeCompatibles();
     }
 
     public function registerJankxCategory($elementsManager)
@@ -81,9 +86,10 @@ class Elementor
      *
      * @return boolean
      */
-    public function registerWidget($widgetsManager, $widget) {
+    public function registerWidget($widgetsManager, $widget)
+    {
         if (is_null(static::$registerWidgetMethod)) {
-            static::$registerWidgetMethod = version_compare(static::$elementorVersion , '3.5.0')
+            static::$registerWidgetMethod = version_compare(static::$elementorVersion, '3.5.0')
                 ? 'register'
                 : 'register_widget_type';
         }
