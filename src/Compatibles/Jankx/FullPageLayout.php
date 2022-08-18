@@ -11,6 +11,8 @@ class FullPageLayout
 {
     protected static $instance;
 
+    protected static $isRegisterToWrapper = false;
+
     /**
      * @var \Elementor\Core\Base\Document
      */
@@ -39,6 +41,16 @@ class FullPageLayout
         add_action(
             'elementor/document/after_save',
             [$this, 'updateSiteLayout']
+        );
+        add_filter(
+            'attribute_escape',
+            [$this, 'registerFullPageToElementorWrapper'],
+            10, 2
+        );
+
+        add_action(
+            'jankx/fullpage/objects',
+            [$this, 'customizeJankFullPageObject']
         );
     }
 
@@ -78,5 +90,29 @@ class FullPageLayout
         } else {
             update_post_meta($data->get_main_id(), PostLayout::POST_LAYOUT_META_KEY, SiteLayout::getInstance()->getDefaultLayout());
         }
+    }
+
+    public function registerFullPageToElementorWrapper($safe_text, $text) {
+        if (static::$isRegisterToWrapper) {
+            remove_filter(
+                'attribute_escape',
+                [$this, 'registerFullPageToElementorWrapper'],
+                10
+            );
+            return;
+        }
+
+        if(preg_match('/^elementor elementor-\d{1,}( .+)?$/', $text)) {
+            static::$isRegisterToWrapper = true;
+
+            return $safe_text . ' jankx-fullpage-wrapper';
+        }
+        return $safe_text;
+    }
+
+    public function customizeJankFullPageObject($object) {
+        return array_merge($object, [
+            'sectionSelector' => '.elementor-section',
+        ]);
     }
 }
