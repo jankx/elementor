@@ -13,6 +13,9 @@ class FullPageLayout
 
     protected static $isRegisterToWrapper = false;
     protected static $currentLayout;
+    protected static $isHackEndWrapper = false;
+
+    protected $lastId = '';
 
     /**
      * @var \Elementor\Core\Base\Document
@@ -37,7 +40,7 @@ class FullPageLayout
         add_action('elementor/element/before_section_end', [
             $this,
             'registerFullLayoutSettings'
-        ], 10, 2);
+        ], 10, 3);
 
         add_action(
             'elementor/document/after_save',
@@ -59,6 +62,7 @@ class FullPageLayout
             'elementor/frontend/before_render',
             [$this, 'makeElementorSectionAsFullPageSlide']
         );
+        add_action('elementor/frontend/after_render', [$this, 'commentOutCloseElementorWrapper']);
     }
 
     protected function currentSiteLayout()
@@ -70,13 +74,21 @@ class FullPageLayout
     }
 
     /**
-     * @param \Elementor\Controls_Stack $controls_stack
+     * @param \Elementor\Core\Base\Document $controls_stack
      */
-    public function registerFullLayoutSettings($controls_stack, $section_id)
+    public function registerFullLayoutSettings($document, $section_id, $args)
     {
+        if (is_a($document, Document::class)) {
+            $elements    = $document->get_elements_data();
+            $lastElement = end($elements);
+            if (isset($lastElement['id'])) {
+                $this->lastId = $lastElement['id'];
+            }
+        }
+
         if ($section_id === 'document_settings') {
             $currentLayout = $this->currentSiteLayout();
-            $controls_stack->add_control(
+            $document->add_control(
                 'fullpage_enabled',
                 [
                     'label' => esc_html__('Enable FullPage', 'jankx'),
@@ -129,7 +141,7 @@ class FullPageLayout
     public function customizeJankFullPageObject($object)
     {
         return array_merge($object, [
-            'sectionSelector' => '.elementor-section',
+            'sectionSelector' => '.elementor-top-section',
             'credits' => [
                 'enabled' => false,
             ]
@@ -145,5 +157,24 @@ class FullPageLayout
             return;
         }
         $element->add_render_attribute('_wrapper', 'class', 'fp-section fp-table');
+    }
+
+    /**
+     * @param \Elementor\Element_Column $element
+     */
+    public function commentOutCloseElementorWrapper($element)
+    {
+        if ($element->get_id() === $this->lastId) {
+            static::$isHackEndWrapper = true;
+            echo '<!--';
+        }
+    }
+
+    /**
+     * @return boolean
+     */
+    public static function isHackEndWrapper()
+    {
+        return boolval(static::$isHackEndWrapper);
     }
 }
