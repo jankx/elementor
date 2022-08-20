@@ -12,6 +12,7 @@ class FullPageLayout
     protected static $instance;
 
     protected static $isRegisterToWrapper = false;
+    protected static $currentLayout;
 
     /**
      * @var \Elementor\Core\Base\Document
@@ -45,13 +46,27 @@ class FullPageLayout
         add_filter(
             'attribute_escape',
             [$this, 'registerFullPageToElementorWrapper'],
-            10, 2
+            10,
+            2
         );
 
         add_action(
             'jankx/fullpage/objects',
             [$this, 'customizeJankFullPageObject']
         );
+
+        add_action(
+            'elementor/frontend/before_render',
+            [$this, 'makeElementorSectionAsFullPageSlide']
+        );
+    }
+
+    protected function currentSiteLayout()
+    {
+        if (is_null(static::$currentLayout)) {
+            static::$currentLayout = SiteLayout::getInstance()->getLayout();
+        }
+        return static::$currentLayout;
     }
 
     /**
@@ -60,7 +75,7 @@ class FullPageLayout
     public function registerFullLayoutSettings($controls_stack, $section_id)
     {
         if ($section_id === 'document_settings') {
-            $currentLayout = SiteLayout::getInstance()->getLayout();
+            $currentLayout = $this->currentSiteLayout();
             $controls_stack->add_control(
                 'fullpage_enabled',
                 [
@@ -92,7 +107,8 @@ class FullPageLayout
         }
     }
 
-    public function registerFullPageToElementorWrapper($safe_text, $text) {
+    public function registerFullPageToElementorWrapper($safe_text, $text)
+    {
         if (static::$isRegisterToWrapper) {
             remove_filter(
                 'attribute_escape',
@@ -102,7 +118,7 @@ class FullPageLayout
             return;
         }
 
-        if(preg_match('/^elementor elementor-\d{1,}( .+)?$/', $text)) {
+        if (preg_match('/^elementor elementor-\d{1,}( .+)?$/', $text)) {
             static::$isRegisterToWrapper = true;
 
             return $safe_text . ' jankx-fullpage-wrapper';
@@ -110,9 +126,24 @@ class FullPageLayout
         return $safe_text;
     }
 
-    public function customizeJankFullPageObject($object) {
+    public function customizeJankFullPageObject($object)
+    {
         return array_merge($object, [
             'sectionSelector' => '.elementor-section',
+            'credits' => [
+                'enabled' => false,
+            ]
         ]);
+    }
+
+    /**
+     * @param \Elementor\Element_Base $element
+     */
+    public function makeElementorSectionAsFullPageSlide($element)
+    {
+        if ($this->currentSiteLayout() !== 'jankx-fullpage') {
+            return;
+        }
+        $element->add_render_attribute('_wrapper', 'class', 'fp-section fp-table');
     }
 }

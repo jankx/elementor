@@ -3,6 +3,7 @@ namespace Jankx\Elementor\Compatibles;
 
 use Jankx\Elementor\Compatibles\Jankx\FullPageLayout;
 use Jankx\Elementor\Compatibles\Jankx\Preload;
+use Jankx\Elementor\Compatibles\Jankx\SiteLayoutCompatibles;
 
 class Bootstrap
 {
@@ -14,5 +15,6 @@ class Bootstrap
     {
         FullPageLayout::getInstance();
         Preload::getInstance();
+        SiteLayoutCompatibles::getInstance();
     }
 }
