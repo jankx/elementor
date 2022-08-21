@@ -153,7 +153,7 @@ class FullPageLayout
      */
     public function makeElementorSectionAsFullPageSlide($element)
     {
-        if ($this->currentSiteLayout() !== 'jankx-fullpage') {
+        if ($this->currentSiteLayout() !== 'jankx-fullpage' || $element->get_type() !== 'section') {
             return;
         }
         $element->add_render_attribute('_wrapper', 'class', 'fp-section fp-table');
