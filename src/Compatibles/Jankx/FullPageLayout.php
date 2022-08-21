@@ -4,6 +4,7 @@ namespace Jankx\Elementor\Compatibles\Jankx;
 use Elementor\Controls_Manager;
 use Elementor\Core\Base\Document;
 use Jankx\FullPage\Common;
+use Jankx\FullPage\Loader;
 use Jankx\SiteLayout\Admin\Metabox\PostLayout;
 use Jankx\SiteLayout\SiteLayout;
 
@@ -156,7 +157,10 @@ class FullPageLayout
         if ($this->currentSiteLayout() !== 'jankx-fullpage' || $element->get_type() !== 'section') {
             return;
         }
-        $element->add_render_attribute('_wrapper', 'class', 'fp-section fp-table');
+
+        if (Loader::checkFullPageEnabled()) {
+            $element->add_render_attribute('_wrapper', 'class', 'fp-section fp-table');
+        }
     }
 
     /**
