@@ -42,19 +42,22 @@ class Icons
 
     public function loadJankxIcons($font_name, $font_css_path, $display_name, $font_family, $ver)
     {
-
+        /**
+         * @var \Jankx\IconFonts\FontIconGenerator
+         */
+        $fontGenerator = GeneratorManager::detectGenerator($font_name, $font_css_path, $font_family, $ver);
         add_filter(
             'elementor/icons_manager/native',
-            function ($icons) use ($font_name, $font_css_path, $display_name, $ver) {
+            function ($icons) use ($font_name, $font_css_path, $display_name, $fontGenerator) {
                 $icons[$font_name] = array(
-                    'name' => $font_name,
+                    'name' => $fontGenerator->getFontName(),
                     'label' => $display_name,
                     'url' => jankx_get_path_url($font_css_path),
                     'enqueue' => [],
-                    'prefix' => 'atz-',
+                    'prefix' => $fontGenerator->detectPrefix(),
                     'displayPrefix' => '',
-                    'labelIcon' => 'atz-luxury',
-                    'ver' => $ver,
+                    'labelIcon' => $fontGenerator->getFontFamily(),
+                    'ver' => $fontGenerator->getVersion(),
                     'fetchJson' => admin_url(sprintf('admin-ajax.php?action=jankx-elementor-fetch-icons&font=%s', $font_name)),
                     'native' => true,
                 );
