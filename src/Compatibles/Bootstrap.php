@@ -4,6 +4,7 @@ namespace Jankx\Elementor\Compatibles;
 use Jankx\Elementor\Compatibles\Jankx\FullPageLayout;
 use Jankx\Elementor\Compatibles\Jankx\Preload;
 use Jankx\Elementor\Compatibles\Jankx\SiteLayoutCompatibles;
+use Jankx\FullPage\Loader;
 
 class Bootstrap
 {
@@ -13,7 +14,11 @@ class Bootstrap
 
     public function makeCompatibles()
     {
-        FullPageLayout::getInstance();
+        if (class_exists(Loader::class)) {
+            FullPageLayout::getInstance();
+
+        }
+
         Preload::getInstance();
         SiteLayoutCompatibles::getInstance();
     }
