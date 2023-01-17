@@ -46,7 +46,7 @@ class Elementor
 
         add_action('elementor/elements/categories_registered', array($this, 'registerJankxCategory'));
         add_action('elementor/controls/controls_registered', array($this, 'registerJankxControls'));
-        add_action('elementor/widgets/widgets_registered', array($this, 'registerJankxWidgets'));
+        add_action('elementor/widgets/register', array($this, 'registerJankxWidgets'));
 
         if (apply_filters('jankx_ecommerce_elementor_active_woocommerce_tab', true)) {
             add_action('elementor/elements/categories_registered', array($this, 'customWidgetCategories'));
@@ -77,7 +77,7 @@ class Elementor
 
     public function registerJankxControls($controls_manager)
     {
-        $controls_manager->register_control(Choices::CONTROL_NAME, new Choices());
+        $controls_manager->register(new Choices());
     }
 
     /**
