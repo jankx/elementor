@@ -12,7 +12,7 @@ class FullWidth extends SiteLayoutCompatible
             Plugin::$instance->frontend->add_body_class('elementor-template-full-width');
         });
 
-        add_filter('jankx_template_page_pre_content', function () {
+        add_filter('jankx/template/site/content/pre', function () {
             // Elementor echo content
             return Plugin::$instance->modules_manager->get_modules('page-templates')->print_content();
         });
