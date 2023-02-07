@@ -16,7 +16,6 @@ class Bootstrap
     {
         if (class_exists(Loader::class)) {
             FullPageLayout::getInstance();
-
         }
 
         Preload::getInstance();
