@@ -39,7 +39,7 @@ class SiteLayoutCompatibles
     {
         $templateFileRelativePath = str_replace(ABSPATH, '', $templateFile);
         if (isset(static::$layoutCompatibleInstances[$templateFileRelativePath]) && class_exists(($cls = static::$layoutCompatibleInstances[$templateFileRelativePath]))) {
-            add_filter('alway_use_jankx_template_engine_system', '__return_true');
+            add_filter('jankx/template/engine/jankx/force-enable', '__return_true');
             /**
              * @var \Jankx\Elementor\Compatibles\Jankx\Abstracts\SiteLayoutCompatible
              */
