@@ -1,4 +1,5 @@
 <?php
+
 namespace Jankx\Elementor;
 
 use Elementor\Core\Settings\Manager;
@@ -81,8 +82,8 @@ class Layout
         if (isset($page_settings['container_width'])) {
             $settings = $page_settings['container_width'];
             $container_width = array(
-                'width'=>array_get($settings, 'size', 1410),
-                'unit' =>array_get($settings, 'unit', 'px'),
+                'width' => array_get($settings, 'size', 1410),
+                'unit' => array_get($settings, 'unit', 'px'),
             );
         }
 
@@ -93,8 +94,8 @@ class Layout
         if (isset($page_settings['container_width_tablet'])) {
             $settings = $page_settings['container_width_tablet'];
             $container_width_tablet = array(
-                'width'=>array_get($settings, 'size', 1025),
-                'unit' =>array_get($settings, 'unit', 'px'),
+                'width' => array_get($settings, 'size', 1025),
+                'unit' => array_get($settings, 'unit', 'px'),
             );
         }
 
@@ -105,8 +106,8 @@ class Layout
         if (isset($page_settings['container_width_mobile'])) {
             $settings = $page_settings['container_width_mobile'];
             $container_width_mobile = array(
-                'width'=>array_get($settings, 'size', 768),
-                'unit' =>array_get($settings, 'unit', 'px'),
+                'width' => array_get($settings, 'size', 768),
+                'unit' => array_get($settings, 'unit', 'px'),
             );
         }
 

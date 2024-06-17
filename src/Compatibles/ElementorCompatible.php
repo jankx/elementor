@@ -1,4 +1,5 @@
 <?php
+
 namespace Jankx\Elementor\Compatibles;
 
 use Elementor\Widget_Base;

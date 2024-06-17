@@ -1,13 +1,12 @@
 <?php
+
 namespace Jankx\Elementor\Widgets;
 
 use Jankx;
 use Jankx\Specs\WP_Query;
-
 use Elementor\Controls_Manager;
 use Jankx\Widget\Renderers\PostsRenderer;
 use Jankx\Elementor\WidgetBase;
-
 use Jankx\PostLayout\PostLayoutManager;
 use Jankx\PostLayout\Layout\ListLayout;
 use Jankx\PostLayout\Layout\Card;

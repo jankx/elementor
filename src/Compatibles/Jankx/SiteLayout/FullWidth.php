@@ -1,4 +1,5 @@
 <?php
+
 namespace Jankx\Elementor\Compatibles\Jankx\SiteLayout;
 
 use Elementor\Plugin;

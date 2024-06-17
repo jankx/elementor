@@ -1,4 +1,5 @@
 <?php
+
 namespace Jankx\Elementor\Widgets;
 
 use Elementor\Widget_Heading;

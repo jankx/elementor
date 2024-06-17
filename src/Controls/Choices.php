@@ -1,4 +1,5 @@
 <?php
+
 namespace AdvancedElementor\Controls;
 
 class Choices extends BaseControl
@@ -22,8 +23,8 @@ class Choices extends BaseControl
             'multiple' => false,
             // Select2 library options
             'choosed_options' => [
-                'shouldSort'=> false,
-                'shouldSortItems'=> false,
+                'shouldSort' => false,
+                'shouldSortItems' => false,
             ],
             // the lockedOptions array can be passed option keys. The passed option keys will be non-deletable.
             'locked_options' => [],

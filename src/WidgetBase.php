@@ -1,4 +1,5 @@
 <?php
+
 namespace Jankx\Elementor;
 
 use Elementor\Widget_Base;
@@ -79,7 +80,7 @@ abstract class WidgetBase extends Widget_Base
                 'label' => __('Image Width', 'jankx'),
                 'type' => Controls_Manager::NUMBER,
                 'min' => 0,
-                'step' =>5,
+                'step' => 5,
                 'default' => 400,
                 'condition' => array(
                     'thumbnail_size' => 'custom'
@@ -93,7 +94,7 @@ abstract class WidgetBase extends Widget_Base
                 'label' => __('Image Height', 'jankx'),
                 'type' => Controls_Manager::NUMBER,
                 'min' => 0,
-                'step' =>5,
+                'step' => 5,
                 'default' => 320,
                 'condition' => array(
                     'thumbnail_size' => 'custom',

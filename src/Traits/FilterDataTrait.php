@@ -1,4 +1,5 @@
 <?php
+
 namespace Jankx\Elementor\Traits;
 
 trait FilterDataTrait

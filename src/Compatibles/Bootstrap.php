@@ -1,4 +1,5 @@
 <?php
+
 namespace Jankx\Elementor\Compatibles;
 
 use Jankx\Elementor\Compatibles\Jankx\FullPageLayout;

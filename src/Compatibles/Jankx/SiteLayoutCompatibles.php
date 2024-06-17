@@ -1,4 +1,5 @@
 <?php
+
 namespace Jankx\Elementor\Compatibles\Jankx;
 
 use Jankx\Elementor\Compatibles\Jankx\SiteLayout\FullWidth;

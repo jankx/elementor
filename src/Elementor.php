@@ -1,4 +1,5 @@
 <?php
+
 namespace Jankx\Elementor;
 
 use ReflectionClass;
@@ -181,7 +182,7 @@ class Elementor
 
     public function loadTemplateInEditingMode($load)
     {
-        if (isset($_GET['action']) && $_GET['action']=== 'elementor') {
+        if (isset($_GET['action']) && $_GET['action'] === 'elementor') {
             return true;
         }
         return $load;

@@ -1,4 +1,5 @@
 <?php
+
 namespace Jankx\Elementor\Compatibles\Jankx;
 
 use Elementor\Controls_Manager;
