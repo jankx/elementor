@@ -25,11 +25,11 @@ class Layout
             });
 
             if (apply_filters('jankx_template_enable_compatible_elementor_container', true)) {
-                add_action('jankx_template_before_open_container', array($this, 'openElementorSelectionClass'));
-                add_action('jankx_template_after_close_container', array($this, 'closeElementorSelectionClass'));
+                add_action('jankx/template/container/open/before', array($this, 'openElementorSelectionClass'));
+                add_action('jankx/template/container/close/after', array($this, 'closeElementorSelectionClass'));
 
-                add_filter('jankx_template_disable_base_css', '__return_true');
-                add_filter('jankx_template_the_container_classes', array($this, 'addElementorContainerClass'));
+                add_filter('jankx/layout/based/common-css', '__return_true');
+                add_filter('jankx/template/container/classes', array($this, 'addElementorContainerClass'));
             }
         }
 
