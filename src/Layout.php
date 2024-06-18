@@ -29,7 +29,7 @@ class Layout
                 add_action('jankx/template/container/open/before', array($this, 'openElementorSelectionClass'));
                 add_action('jankx/template/container/close/after', array($this, 'closeElementorSelectionClass'));
 
-                add_filter('jankx/layout/based/common-css', '__return_true');
+                add_filter('jankx/layout/based/common-css', '__return_false');
                 add_filter('jankx/template/container/classes', array($this, 'addElementorContainerClass'));
             }
         }
