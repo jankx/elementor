@@ -9,7 +9,7 @@ class FullWidth extends SiteLayoutCompatible
 {
     public function mock()
     {
-        add_action('jankx/template/header/before', function () {
+        add_action('jankx/template/page/render/before', function () {
             Plugin::$instance->frontend->add_body_class('elementor-template-full-width');
         });
 
