@@ -49,7 +49,7 @@ class PageSelector extends WidgetBase
         $this->start_controls_section(
             'content_section',
             array(
-                'label' => __('Content', 'jankx_ecommerce'),
+                'label' => __('Content', 'jankx_woocommerce'),
                 'tab' => Controls_Manager::TAB_CONTENT,
             )
         );

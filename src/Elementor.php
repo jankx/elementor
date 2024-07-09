@@ -49,7 +49,7 @@ class Elementor
         add_action('elementor/controls/controls_registered', array($this, 'registerJankxControls'));
         add_action('elementor/widgets/register', array($this, 'registerJankxWidgets'));
 
-        if (apply_filters('jankx_ecommerce_elementor_active_woocommerce_tab', true)) {
+        if (apply_filters('jankx_woocommerce_elementor_active_woocommerce_tab', true)) {
             add_action('elementor/elements/categories_registered', array($this, 'customWidgetCategories'));
         }
         if (apply_filters('jankx_plugin_elementor_silent_mode', false)) {
