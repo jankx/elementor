@@ -2,6 +2,7 @@
 
 namespace Jankx\Elementor;
 
+use Elementor\Core\Base\Document;
 use Elementor\Core\Settings\Manager;
 use Elementor\Core\Responsive\Responsive;
 use Jankx\Asset\CustomizableAsset;
@@ -17,7 +18,7 @@ class Layout
     public function integrateTemplateClasses()
     {
         $document = \Elementor\Plugin::instance()->documents->get(get_the_ID());
-        if (is_singular() && $document->is_built_with_elementor()) {
+        if (is_singular() && $document instanceof Document && $document->is_built_with_elementor()) {
             $settings = array_get($document->get_data(), 'settings');
             $template = array_get($settings, 'template', 'default');
 
