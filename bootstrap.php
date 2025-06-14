@@ -1,6 +1,6 @@
 <?php
 if (!defined('ABSPATH')) {
-    exit('Cheatin huh?');
+    exit('Cheating huh?');
 }
 use Jankx\Elementor\Elementor;
 use Elementor\Plugin;

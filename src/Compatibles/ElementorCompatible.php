@@ -3,7 +3,7 @@
 namespace Jankx\Elementor\Compatibles;
 
 if (!defined('ABSPATH')) {
-    exit('Cheatin huh?');
+    exit('Cheating huh?');
 }
 
 use Elementor\Widget_Base;

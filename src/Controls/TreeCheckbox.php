@@ -3,7 +3,7 @@
 namespace AdvancedElementor\Controls;
 
 if (!defined('ABSPATH')) {
-    exit('Cheatin huh?');
+    exit('Cheating huh?');
 }
 
 use Elementor\Base_Control;

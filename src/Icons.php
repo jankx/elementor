@@ -3,7 +3,7 @@
 namespace Jankx\Elementor;
 
 if (!defined('ABSPATH')) {
-    exit('Cheatin huh?');
+    exit('Cheating huh?');
 }
 
 use Jankx\IconFonts;

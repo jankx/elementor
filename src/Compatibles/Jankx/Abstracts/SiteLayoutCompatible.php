@@ -3,7 +3,7 @@
 namespace Jankx\Elementor\Compatibles\Jankx\Abstracts;
 
 if (!defined('ABSPATH')) {
-    exit('Cheatin huh?');
+    exit('Cheating huh?');
 }
 
 abstract class SiteLayoutCompatible

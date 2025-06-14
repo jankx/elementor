@@ -3,7 +3,7 @@
 namespace Jankx\Elementor\Widgets;
 
 if (!defined('ABSPATH')) {
-    exit('Cheatin huh?');
+    exit('Cheating huh?');
 }
 
 use Elementor\Controls_Manager;

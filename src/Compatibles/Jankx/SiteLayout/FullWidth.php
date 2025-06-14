@@ -3,7 +3,7 @@
 namespace Jankx\Elementor\Compatibles\Jankx\SiteLayout;
 
 if (!defined('ABSPATH')) {
-    exit('Cheatin huh?');
+    exit('Cheating huh?');
 }
 
 use Elementor\Plugin;

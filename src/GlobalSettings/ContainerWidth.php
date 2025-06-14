@@ -3,7 +3,7 @@
 namespace Jankx\Elementor\GlobalSettings;
 
 if (!defined('ABSPATH')) {
-    exit('Cheatin huh?');
+    exit('Cheating huh?');
 }
 
 class ContainerWidth
