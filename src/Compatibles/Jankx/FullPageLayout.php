@@ -2,6 +2,10 @@
 
 namespace Jankx\Elementor\Compatibles\Jankx;
 
+if (!defined('ABSPATH')) {
+    exit('Cheatin huh?');
+}
+
 use Elementor\Controls_Manager;
 use Elementor\Core\Base\Document;
 use Jankx\FullPage\Common;

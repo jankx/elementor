@@ -2,6 +2,10 @@
 
 namespace Jankx\Elementor\Widgets;
 
+if (!defined('ABSPATH')) {
+    exit('Cheatin huh?');
+}
+
 use Elementor\Controls_Manager;
 use Jankx;
 use Elementor\Plugin as Elementor;

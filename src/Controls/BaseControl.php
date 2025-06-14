@@ -2,6 +2,10 @@
 
 namespace AdvancedElementor\Controls;
 
+if (!defined('ABSPATH')) {
+    exit('Cheatin huh?');
+}
+
 use Elementor\Base_Control;
 
 abstract class BaseControl extends Base_Control

@@ -2,6 +2,10 @@
 
 namespace Jankx\Elementor;
 
+if (!defined('ABSPATH')) {
+    exit('Cheatin huh?');
+}
+
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
 use Jankx\PostLayout\PostLayoutManager;

@@ -2,6 +2,10 @@
 
 namespace Jankx\Elementor;
 
+if (!defined('ABSPATH')) {
+    exit('Cheatin huh?');
+}
+
 use Elementor\Core\Base\Document;
 use Elementor\Core\Settings\Manager;
 use Elementor\Core\Responsive\Responsive;

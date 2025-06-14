@@ -2,6 +2,10 @@
 
 namespace Jankx\Elementor\Compatibles;
 
+if (!defined('ABSPATH')) {
+    exit('Cheatin huh?');
+}
+
 use Jankx\Elementor\Compatibles\Jankx\FullPageLayout;
 use Jankx\Elementor\Compatibles\Jankx\Preload;
 use Jankx\Elementor\Compatibles\Jankx\SiteLayoutCompatibles;

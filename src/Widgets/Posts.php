@@ -2,6 +2,10 @@
 
 namespace Jankx\Elementor\Widgets;
 
+if (!defined('ABSPATH')) {
+    exit('Cheatin huh?');
+}
+
 use Jankx;
 use Jankx\Specs\WP_Query;
 use Elementor\Controls_Manager;

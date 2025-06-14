@@ -2,6 +2,10 @@
 
 namespace Jankx\Elementor\Widgets;
 
+if (!defined('ABSPATH')) {
+    exit('Cheatin huh?');
+}
+
 use Elementor\Widget_Heading;
 
 class GradientHeading extends Widget_Heading

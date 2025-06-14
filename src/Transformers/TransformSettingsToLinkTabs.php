@@ -2,6 +2,10 @@
 
 namespace Jankx\Elementor\Transformers;
 
+if (!defined('ABSPATH')) {
+    exit('Cheatin huh?');
+}
+
 use Jankx\Widget\Data\LinkTab;
 
 class TransformSettingsToLinkTabs implements \Iterator, \Countable

@@ -2,6 +2,10 @@
 
 namespace Jankx\Elementor\Filters;
 
+if (!defined('ABSPATH')) {
+    exit('Cheatin huh?');
+}
+
 use Jankx\Filter;
 use Elementor\Widget_Text_Editor;
 

@@ -2,6 +2,10 @@
 
 namespace Jankx\Elementor\Compatibles;
 
+if (!defined('ABSPATH')) {
+    exit('Cheatin huh?');
+}
+
 use Elementor\Widget_Base;
 use Elementor\Widgets_Manager;
 

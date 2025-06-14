@@ -2,6 +2,10 @@
 
 namespace Jankx\Elementor\Compatibles\Jankx\SiteLayout;
 
+if (!defined('ABSPATH')) {
+    exit('Cheatin huh?');
+}
+
 use Elementor\Plugin;
 use Jankx\Elementor\Compatibles\Jankx\Abstracts\SiteLayoutCompatible;
 

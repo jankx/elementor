@@ -2,6 +2,10 @@
 
 namespace AdvancedElementor\Controls;
 
+if (!defined('ABSPATH')) {
+    exit('Cheatin huh?');
+}
+
 use Elementor\Base_Control;
 
 class TreeCheckbox extends Base_Control

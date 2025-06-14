@@ -2,6 +2,10 @@
 
 namespace AdvancedElementor\Controls;
 
+if (!defined('ABSPATH')) {
+    exit('Cheatin huh?');
+}
+
 class Choices extends BaseControl
 {
     const CONTROL_NAME = 'choices';

@@ -2,6 +2,10 @@
 
 namespace Jankx\Elementor;
 
+if (!defined('ABSPATH')) {
+    exit('Cheatin huh?');
+}
+
 use ReflectionClass;
 use Elementor\Controls_Manager;
 use Elementor\Plugin;

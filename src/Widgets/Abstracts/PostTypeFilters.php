@@ -2,6 +2,10 @@
 
 namespace Jankx\Elementor\Widgets\Abstracts;
 
+if (!defined('ABSPATH')) {
+    exit('Cheatin huh?');
+}
+
 use Jankx;
 use Elementor\Controls_Manager;
 use AdvancedElementor\Controls\Choices;

@@ -2,6 +2,10 @@
 
 namespace Jankx\Elementor;
 
+if (!defined('ABSPATH')) {
+    exit('Cheatin huh?');
+}
+
 use Jankx\IconFonts;
 use Jankx\IconFonts\GeneratorManager;
 

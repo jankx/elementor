@@ -2,6 +2,10 @@
 
 namespace Jankx\Elementor\Traits;
 
+if (!defined('ABSPATH')) {
+    exit('Cheatin huh?');
+}
+
 trait FilterDataTrait
 {
     protected function getTaxonomyFilterOptions($options)
